@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | 3D Inversion Viewer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: #414754;
+            border-radius: 2px;
+            outline: none;
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #adc7ff;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .voxel-grid {
+            perspective: 1000px;
+        }
+        /* Hide scrollbars for clean instrument look */
+        ::-webkit-scrollbar { display: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e2",
+                        "background": "#121414",
+                        "primary": "#adc7ff",
+                        "primary-container": "#1a73e8",
+                        "surface-container-highest": "#343535",
+                        "surface-container-low": "#1a1c1c",
+                        "surface-container-high": "#292a2a",
+                        "on-surface": "#e3e2e2",
+                        "on-surface-variant": "#c1c6d6",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "surface": "#121414",
+                        "tertiary": "#fbbc05",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_width": "260px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"], "h2": ["Inter"], "h3": ["Inter"], "h4": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body": ["Inter"], "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden h-screen w-screen flex">
+<!-- Sidebar Navigation (Predicted Shared Component) -->
+<nav class="h-screen w-sidebar_width sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md shrink-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-on-surface-variant opacity-60">v4.2.0-alpha</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</div>
+<div class="mt-auto px-md">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm rounded-lg transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace -->
+<main class="flex-1 relative flex flex-col overflow-hidden bg-background">
+<!-- Top Toolbar Navigation (Predicted Shared Component) -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant shrink-0 z-50">
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">view_in_ar</span>
+<h2 class="font-h4 text-h4 font-bold text-on-surface">3D Inversion Viewer</h2>
+</div>
+<nav class="hidden md:flex gap-lg">
+<a class="text-primary font-bold border-b-2 border-primary pb-xs font-body text-body" href="#">Project Alpha</a>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200" href="#">Project Beta</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center bg-surface-container px-sm py-xs border border-outline-variant rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body placeholder:text-on-surface-variant/40 w-48" placeholder="Search coordinates..." type="text"/>
+</div>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all duration-200"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all duration-200"><span class="material-symbols-outlined">contrast</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a geophysicist in a high-tech laboratory setting, wearing a neutral grey tech vest, with soft cinematic lighting and a background showing blurred digital monitors with geological data." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJFOpDAxZ3toG3qpwEDpkWYGYIFD7S8fQkpTGDehq6Q6YMR_mx_N60M-Asa3GgSPB59ZMAP2HLrQxWhKaiVqYl9SE33SBCCUCnGWXGPMWHCfoixYdI4CgUqUxx11MvJwr1MQVHl4IMct4j8XE1LpmVFlV9_keCjw9ndJakgCsPvhf04b17q4SFCJJhzSyLuZVpCmwLO997O8y27f9URACZ7guGzpNG4LqVtLmtUwIy-tkPe0ucpTaDO72jdKcNjBs_Ki4iov65g61n"/>
+</div>
+</div>
+</header>
+<!-- 3D Canvas Area -->
+<div class="flex-1 relative overflow-hidden">
+<!-- 3D Scene Background (Shader) -->
+
+<!-- Three.js Scene (The actual 3D Inversion Model) -->
+
+<!-- Floating 3D Toolbar -->
+<div class="absolute top-md left-1/2 -translate-x-1/2 glass-panel px-sm py-sm rounded-xl flex items-center gap-xs z-20 shadow-2xl">
+<button class="p-sm flex flex-col items-center gap-xs bg-primary-container text-on-primary-container rounded-lg group transition-all">
+<span class="material-symbols-outlined">published_with_changes</span>
+<span class="font-label-mono text-label-mono">Orbit</span>
+</button>
+<button class="p-sm flex flex-col items-center gap-xs hover:bg-surface-container-highest rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">zoom_in</span>
+<span class="font-label-mono text-label-mono">Zoom</span>
+</button>
+<div class="w-[1px] h-8 bg-outline-variant mx-xs"></div>
+<button class="p-sm flex flex-col items-center gap-xs hover:bg-surface-container-highest rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">straighten</span>
+<span class="font-label-mono text-label-mono">Measure</span>
+</button>
+<button class="p-sm flex flex-col items-center gap-xs hover:bg-surface-container-highest rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">ads_click</span>
+<span class="font-label-mono text-label-mono">Anomaly Pick</span>
+</button>
+<div class="w-[1px] h-8 bg-outline-variant mx-xs"></div>
+<button class="p-sm flex flex-col items-center gap-xs hover:bg-surface-container-highest rounded-lg transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">splitscreen</span>
+<span class="font-label-mono text-label-mono">Slice</span>
+</button>
+</div>
+<!-- Right Legend/Data Overlay -->
+<div class="absolute top-md right-md bottom-md w-64 glass-panel rounded-xl p-md flex flex-col gap-lg z-20 shadow-2xl">
+<section>
+<div class="flex justify-between items-center mb-sm">
+<h4 class="font-h4 text-caption uppercase tracking-wider text-on-surface-variant">Model Legend</h4>
+<span class="material-symbols-outlined text-sm">info</span>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="font-data-mono text-data-mono flex-1">High Conductive</span>
+<span class="font-data-mono text-data-mono opacity-50">&gt; 100 S/m</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<span class="font-data-mono text-data-mono flex-1">Anomalous Zone</span>
+<span class="font-data-mono text-data-mono opacity-50">45-90 S/m</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<span class="font-data-mono text-data-mono flex-1">Basement Rock</span>
+<span class="font-data-mono text-data-mono opacity-50">&lt; 10 S/m</span>
+</div>
+</div>
+</section>
+<div class="h-[1px] bg-outline-variant"></div>
+<section class="flex-1 overflow-y-auto pr-sm">
+<h4 class="font-h4 text-caption uppercase tracking-wider text-on-surface-variant mb-md">Slice Parameters</h4>
+<div class="space-y-lg">
+<div class="space-y-sm">
+<div class="flex justify-between">
+<label class="font-caption text-on-surface-variant">X-Plane (East)</label>
+<span class="font-data-mono text-primary">1,240m</span>
+</div>
+<input class="w-full custom-slider" type="range"/>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between">
+<label class="font-caption text-on-surface-variant">Y-Plane (North)</label>
+<span class="font-data-mono text-primary">452m</span>
+</div>
+<input class="w-full custom-slider" type="range"/>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between">
+<label class="font-caption text-on-surface-variant">Z-Plane (Depth)</label>
+<span class="font-data-mono text-primary">-3,120m</span>
+</div>
+<input class="w-full custom-slider" type="range"/>
+</div>
+</div>
+</section>
+<div class="mt-auto space-y-md">
+<button class="w-full py-sm bg-primary-container text-on-primary-container font-h4 text-body rounded-lg hover:brightness-110 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export Voxel Grid
+                    </button>
+<div class="flex justify-between text-caption text-on-surface-variant/50">
+<span>CPU: 12.4ms</span>
+<span>GPU: 8.1ms</span>
+</div>
+</div>
+</div>
+<!-- Coordinate HUD (Bottom Left) -->
+<div class="absolute bottom-md left-md glass-panel p-md rounded-xl z-20 flex flex-col gap-xs min-w-[200px]">
+<div class="flex justify-between border-b border-outline-variant/30 pb-xs mb-xs">
+<span class="font-caption text-on-surface-variant">VIEWPORT DATA</span>
+<span class="material-symbols-outlined text-sm">gps_fixed</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-mono text-label-mono opacity-50">LAT</span>
+<span class="font-data-mono text-on-surface">45° 12' 04" N</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-mono text-label-mono opacity-50">LON</span>
+<span class="font-data-mono text-on-surface">122° 40' 32" W</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-mono text-label-mono opacity-50">ELEV</span>
+<span class="font-data-mono text-on-surface">1,402.3 m</span>
+</div>
+</div>
+<!-- Bottom Control Strip -->
+<div class="absolute bottom-md left-1/2 -translate-x-1/2 glass-panel px-lg py-md rounded-2xl flex items-center gap-xl z-20 shadow-2xl min-w-[50%]">
+<div class="flex items-center gap-md flex-1">
+<span class="material-symbols-outlined text-on-surface-variant">opacity</span>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-center">
+<span class="font-label-mono text-label-mono opacity-60">MODEL OPACITY</span>
+<span class="font-data-mono text-primary text-xs">84%</span>
+</div>
+<input class="w-full custom-slider" type="range" value="84"/>
+</div>
+</div>
+<div class="w-[1px] h-10 bg-outline-variant"></div>
+<div class="flex items-center gap-md flex-1">
+<span class="material-symbols-outlined text-on-surface-variant">layers</span>
+<div class="flex-1 space-y-xs">
+<div class="flex justify-between items-center">
+<span class="font-label-mono text-label-mono opacity-60">CLIPPING DEPTH</span>
+<span class="font-data-mono text-primary text-xs">5,000m</span>
+</div>
+<input class="w-full custom-slider" max="10000" min="0" type="range" value="5000"/>
+</div>
+</div>
+<button class="p-sm rounded-full bg-surface-container-highest text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<!-- Compass Overlay -->
+<div class="absolute top-md left-md w-16 h-16 pointer-events-none z-30 opacity-60">
+<svg class="w-full h-full drop-shadow-lg" viewbox="0 0 100 100">
+<circle class="text-outline-variant" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="0.5"></circle>
+<path class="text-outline-variant" d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="0.5"></path>
+<text class="fill-primary font-label-mono text-[10px]" text-anchor="middle" x="50" y="8">N</text>
+<text class="fill-on-surface-variant font-label-mono text-[10px]" text-anchor="middle" x="50" y="98">S</text>
+<text class="fill-on-surface-variant font-label-mono text-[10px]" text-anchor="middle" x="98" y="54">E</text>
+<text class="fill-on-surface-variant font-label-mono text-[10px]" text-anchor="middle" x="2" y="54">W</text>
+<polygon class="text-primary/40" fill="currentColor" points="50,20 46,50 50,80 54,50"></polygon>
+</svg>
+</div>
+</main>
+<!-- Interactions Script -->
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.96)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simulating slice plane updates (Visual feedback only)
+        const sliders = document.querySelectorAll('.custom-slider');
+        sliders.forEach(slider => {
+            slider.addEventListener('input', (e) => {
+                const valDisplay = e.target.parentElement.querySelector('.font-data-mono');
+                if (valDisplay && valDisplay.innerText.includes('m')) {
+                    // Logic for real app would go here
+                }
+            });
+        });
+    </script>
+</body></html>

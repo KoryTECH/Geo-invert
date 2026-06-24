@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Interpretation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e2",
+                        "background": "#121414",
+                        "primary": "#adc7ff",
+                        "primary-container": "#1a73e8",
+                        "surface-container-highest": "#343535",
+                        "surface-container-low": "#1a1c1c",
+                        "surface-container": "#1e2020",
+                        "surface-container-high": "#292a2a",
+                        "on-surface": "#e3e2e2",
+                        "on-surface-variant": "#c1c6d6",
+                        "outline": "#8b909f",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "tertiary": "#fbbc05",
+                        "error": "#ffb4ab",
+                        "surface": "#121414"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_collapsed": "64px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "sidebar_width": "260px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "h4": ["Inter"],
+                        "caption": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a1c1c;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #414754;
+        }
+        .active-row {
+            background-color: #343535 !important;
+            border-left: 4px solid #adc7ff !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden flex h-screen">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-sidebar_width sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-caption text-on-surface-variant opacity-60">v4.2.0-alpha</p>
+</div>
+<nav class="flex-grow space-y-xs">
+<!-- Dashboard -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<!-- Projects -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<!-- Surveys -->
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<!-- Data Entry -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col min-w-0">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-sm">
+<span class="font-h4 text-h4 font-bold text-on-surface">Interpretation</span>
+<span class="text-outline">/</span>
+<span class="font-body text-body text-on-surface-variant">Grid_A1_Survey</span>
+</div>
+<div class="hidden md:flex gap-md">
+<button class="text-primary font-bold border-b-2 border-primary pb-xs transition-transform active:scale-95">Project Alpha</button>
+<button class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200">Project Beta</button>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</span>
+<input class="bg-surface-container-high border border-outline-variant rounded px-10 py-1 text-body focus:border-primary outline-none transition-all w-64" placeholder="Search anomalies..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="contrast">contrast</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Professional corporate headshot of a female geophysicist in a high-tech office setting. She is wearing a modern blazer and is partially illuminated by the soft blue glow of large data monitors in the background. The aesthetic is clean, technical, and high-key with a sophisticated professional color palette of dark grays and bright accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7D0sgrf8PychCSE8UqMFZlwQg73leD8vHMnH17heS2FkTa7ClIgy7Oe7ifh4SvwkpACbv8Kx1Amt481q7QSkDX0hxXfyewOUzlm3AastBI8TVvcWr6-acoXTaOLkAH9kgKD37ih8YrHqaOiHL7Ok_bvQpcHI4AnCZhwg3AUer7UkXHCKbdfg6RPzXLKBI47UzfBtj2SvF2e-yrAdojvpY58qkONyq8JWYqAE2OvFM8pPut5sS8Pyr3ya0cZ1r-0yUEnkLoKOx4jab"/>
+</div>
+</div>
+</header>
+<!-- Content Split Layout -->
+<div class="flex-grow flex min-h-0">
+<!-- Left Panel: Anomaly List & Detail -->
+<section class="w-1/2 flex flex-col border-r border-outline-variant bg-surface-container-lowest">
+<!-- Table Header -->
+<div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-h4 text-h4">Anomaly Inventory</h2>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-sm py-1 bg-surface-container-highest border border-outline-variant rounded hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+<span class="text-caption">Filter</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-1 bg-primary-container text-on-primary-container rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span class="text-caption">New Point</span>
+</button>
+</div>
+</div>
+<!-- Table Content -->
+<div class="flex-grow overflow-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-high z-10">
+<tr class="text-on-surface-variant font-label-mono text-label-mono uppercase tracking-wider">
+<th class="px-md py-sm border-b border-outline-variant">ID</th>
+<th class="px-md py-sm border-b border-outline-variant">Type</th>
+<th class="px-md py-sm border-b border-outline-variant">Depth (m)</th>
+<th class="px-md py-sm border-b border-outline-variant text-right">Confidence</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono">
+<tr class="hover:bg-surface-container-high cursor-pointer transition-colors active-row" onclick="selectAnomaly(this)">
+<td class="px-md py-sm border-b border-outline-variant/30 text-primary">AN-0482</td>
+<td class="px-md py-sm border-b border-outline-variant/30">Magnetic Dipole</td>
+<td class="px-md py-sm border-b border-outline-variant/30">142.5</td>
+<td class="px-md py-sm border-b border-outline-variant/30 text-right">
+<span class="px-sm py-xs bg-secondary/10 text-secondary rounded">94%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high cursor-pointer transition-colors" onclick="selectAnomaly(this)">
+<td class="px-md py-sm border-b border-outline-variant/30 text-primary">AN-0485</td>
+<td class="px-md py-sm border-b border-outline-variant/30">Magnetic Dipole</td>
+<td class="px-md py-sm border-b border-outline-variant/30">89.2</td>
+<td class="px-md py-sm border-b border-outline-variant/30 text-right">
+<span class="px-sm py-xs bg-secondary/10 text-secondary rounded">88%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high cursor-pointer transition-colors" onclick="selectAnomaly(this)">
+<td class="px-md py-sm border-b border-outline-variant/30 text-primary">AN-0491</td>
+<td class="px-md py-sm border-b border-outline-variant/30">Induced Polarization</td>
+<td class="px-md py-sm border-b border-outline-variant/30">215.1</td>
+<td class="px-md py-sm border-b border-outline-variant/30 text-right">
+<span class="px-sm py-xs bg-tertiary/10 text-tertiary rounded">62%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high cursor-pointer transition-colors" onclick="selectAnomaly(this)">
+<td class="px-md py-sm border-b border-outline-variant/30 text-primary">AN-0499</td>
+<td class="px-md py-sm border-b border-outline-variant/30">Magnetic Dipole</td>
+<td class="px-md py-sm border-b border-outline-variant/30">54.8</td>
+<td class="px-md py-sm border-b border-outline-variant/30 text-right">
+<span class="px-sm py-xs bg-secondary/10 text-secondary rounded">91%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high cursor-pointer transition-colors" onclick="selectAnomaly(this)">
+<td class="px-md py-sm border-b border-outline-variant/30 text-primary">AN-0503</td>
+<td class="px-md py-sm border-b border-outline-variant/30">Gravity Anomaly</td>
+<td class="px-md py-sm border-b border-outline-variant/30">312.4</td>
+<td class="px-md py-sm border-b border-outline-variant/30 text-right">
+<span class="px-sm py-xs bg-error/10 text-error rounded">41%</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Detail Panel (Expanded Profile Graph) -->
+<div class="h-1/3 bg-surface-container border-t border-outline-variant p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-md">
+<span class="font-h4 text-h4">Profile Detail: AN-0482</span>
+<div class="flex gap-sm">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 bg-primary rounded-full"></span>
+<span class="text-caption text-on-surface-variant">Observed</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 border border-secondary rounded-full"></span>
+<span class="text-caption text-on-surface-variant">Calculated</span>
+</div>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="fullscreen">fullscreen</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="settings">settings</button>
+</div>
+</div>
+<!-- Mock Graph Area -->
+<div class="flex-grow bg-background rounded border border-outline-variant p-sm relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 flex items-center justify-center pointer-events-none">
+<span class="font-data-mono text-on-surface">COORDINATE MAPPING ACTIVE</span>
+</div>
+
+<div class="relative w-full h-full flex flex-col justify-end">
+<!-- Visualizing a magnetic profile curve -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<path d="M0,150 C100,160 200,100 300,80 C400,60 450,20 500,20 C550,20 600,60 700,80 C800,100 900,160 1000,150" fill="none" stroke="#adc7ff" stroke-width="2"></path>
+<path d="M0,152 C100,162 200,102 300,82 C400,62 450,22 500,22 C550,22 600,62 700,82 C800,102 900,162 1000,152" fill="none" stroke="#6ddd81" stroke-dasharray="4,2" stroke-width="1.5"></path>
+</svg>
+<div class="flex justify-between font-label-mono text-outline mt-1 px-1">
+<span>-500m</span>
+<span>0m</span>
+<span>+500m</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Map & 3D View -->
+<section class="w-1/2 flex flex-col bg-surface overflow-hidden relative">
+<!-- Main Map View -->
+<div class="flex-grow relative bg-background">
+<img class="w-full h-full object-cover opacity-80" data-alt="A top-down satellite geophysical map of a desert landscape with high-contrast color overlays representing magnetic field intensity. A specialized UI layer features crisp, outlined geometric markers for magnetic anomalies, with connecting lines forming a mathematical grid. The lighting is digital and focused, emphasizing data precision over naturalism, with a color palette of deep violets, teals, and vibrant yellows." data-location="Nevada Desert Mining Site" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvRBuzrN0lvRRnNAOyO9ctIM_qkzkXyOKwiAvSJLBcAlkKbhhEMHjmjdhSzHiSOQFI1Px77jO6vZGrMgfL3BMiVonXZYhad4YSoi7gA1YhSWM1YdT5g6ke5vzE89cCFBxhVa84eUwX8kdWN2AHwrn9ROmd23RLaOay5kjmFsBQ0vZnXi70Z5muv06rRLVnYtw14CGrZVXWF1E5tEOwiBV6HqBfbI192YZ2Xd391jIY1n-BJy6hzkLgvfwthyqlkmgzUgKkttHRD9M5"/>
+<!-- Floating Map Toolbar -->
+<div class="absolute top-md right-md flex flex-col gap-sm">
+<div class="glass-panel p-sm rounded-lg flex flex-col gap-sm shadow-xl">
+<button class="material-symbols-outlined text-on-surface hover:text-primary transition-colors" data-icon="layers">layers</button>
+<div class="h-[1px] bg-outline-variant/30"></div>
+<button class="material-symbols-outlined text-on-surface hover:text-primary transition-colors" data-icon="zoom_in">zoom_in</button>
+<button class="material-symbols-outlined text-on-surface hover:text-primary transition-colors" data-icon="zoom_out">zoom_out</button>
+<div class="h-[1px] bg-outline-variant/30"></div>
+<button class="material-symbols-outlined text-on-surface hover:text-primary transition-colors" data-icon="navigation">navigation</button>
+</div>
+</div>
+<!-- Map Legend -->
+<div class="absolute bottom-md left-md glass-panel px-md py-sm rounded-lg shadow-xl">
+<div class="flex flex-col gap-xs">
+<span class="font-label-mono text-label-mono text-outline uppercase">Magnetic Intensity (nT)</span>
+<div class="h-2 w-48 bg-gradient-to-r from-blue-900 via-green-500 to-red-600 rounded-full"></div>
+<div class="flex justify-between font-label-mono text-[10px] text-on-surface-variant">
+<span>-1200</span>
+<span>0</span>
+<span>+1200</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Split Divider Logic (Visual only) -->
+<div class="h-1 bg-outline-variant cursor-ns-resize hover:bg-primary transition-colors"></div>
+<!-- Mini 3D Context View -->
+<div class="h-1/3 bg-background relative border-t border-outline-variant overflow-hidden">
+<div class="absolute top-sm left-sm z-10 glass-panel px-sm py-xs rounded flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="view_in_ar">view_in_ar</span>
+<span class="text-caption font-bold">3D SUBSURFACE VIEW</span>
+</div>
+<!-- 3D Shader for Depth Rendering -->
+
+<!-- Perspective Overlay -->
+<div class="absolute inset-0 pointer-events-none border border-primary/20 flex items-center justify-center">
+<div class="w-full h-full opacity-10 bg-[radial-gradient(#adc7ff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+<!-- Virtual Focus Frame -->
+<div class="absolute w-48 h-48 border border-primary/40 rounded-full animate-pulse"></div>
+</div>
+<!-- 3D Navigation Controls -->
+<div class="absolute bottom-sm right-sm z-10 flex gap-xs">
+<button class="bg-surface-container-high/80 backdrop-blur p-xs rounded hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="rotate_left">rotate_left</span>
+</button>
+<button class="bg-surface-container-high/80 backdrop-blur p-xs rounded hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="center_focus_strong">center_focus_strong</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[60]">
+<span class="material-symbols-outlined text-[28px]" data-icon="auto_awesome">auto_awesome</span>
+</button>
+<script>
+        function selectAnomaly(row) {
+            // Remove active state from all rows
+            document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row'));
+            // Add active state to selected row
+            row.classList.add('active-row');
+            
+            // Micro-interaction: Log for simulated reaction
+            console.log("Anomaly ID selected:", row.cells[0].innerText);
+        }
+
+        // Atmospheric micro-interaction for map markers
+        document.addEventListener('mousemove', (e) => {
+            // Logic for a subtle spotlight effect if needed
+        });
+    </script>
+</body></html>

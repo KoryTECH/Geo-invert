@@ -1,0 +1,55 @@
+# Build
+build/
+out/
+*.exe
+*.obj
+*.lib
+*.dll
+*.pdb
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+*.egg
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+*.hdf5
+*.h5
+*.gdb
+*.db
+uploads/
+processed/

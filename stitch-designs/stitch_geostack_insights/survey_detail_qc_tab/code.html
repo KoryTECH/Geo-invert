@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Survey Quality Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e2",
+                        "background": "#121414",
+                        "primary": "#adc7ff",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#343535",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#003210",
+                        "surface-container-low": "#1a1c1c",
+                        "inverse-on-surface": "#2f3131",
+                        "secondary-fixed": "#89fa9b",
+                        "surface-tint": "#adc7ff",
+                        "surface-container": "#1e2020",
+                        "surface-container-high": "#292a2a",
+                        "tertiary-container": "#987000",
+                        "surface-variant": "#343535",
+                        "on-secondary": "#003914",
+                        "on-secondary-fixed": "#002108",
+                        "primary-container": "#1a73e8",
+                        "inverse-primary": "#005bc0",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-primary-container": "#ffffff",
+                        "outline": "#8b909f",
+                        "on-surface-variant": "#c1c6d6",
+                        "primary-fixed-dim": "#adc7ff",
+                        "tertiary": "#fbbc05",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#fbbc05",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-tertiary": "#402d00",
+                        "secondary-container": "#30a550",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-background": "#e3e2e2",
+                        "surface-container-lowest": "#0d0e0f",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-primary-fixed": "#001a41",
+                        "surface-bright": "#38393a",
+                        "on-secondary-fixed-variant": "#005320",
+                        "on-tertiary-container": "#ffffff",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#6ddd81",
+                        "on-surface": "#e3e2e2",
+                        "on-primary": "#002e68",
+                        "surface": "#121414",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "surface-dim": "#121414",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_collapsed": "64px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "sidebar_width": "260px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "h4": ["Inter"],
+                        "caption": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #121414;
+            color: #e3e2e2;
+            overflow: hidden;
+        }
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #1a1c1c;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #414754;
+        }
+        .glass {
+            backdrop-filter: blur(12px);
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(65, 71, 84, 0.5);
+        }
+    </style>
+</head>
+<body class="flex h-screen w-screen font-body">
+<!-- SIDEBAR ANCHOR -->
+<aside class="h-screen w-sidebar_width sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md shrink-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-on-surface-variant opacity-60">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs overflow-y-auto px-xs">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<!-- Active Tab: Surveys -->
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-xs">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- MAIN CANVAS -->
+<main class="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+<!-- TOP NAV ANCHOR -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant z-50">
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="satellite_alt">satellite_alt</span>
+<h2 class="font-h4 text-h4 font-bold text-on-surface">Magnetic Survey #204 - QC</h2>
+</div>
+<div class="hidden md:flex gap-md">
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface" href="#">Overview</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-xs" href="#">Quality Control</a>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface" href="#">Processing</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center bg-surface-container-high rounded px-sm py-1 border border-outline-variant focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-md" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body w-48 font-body placeholder:text-outline" placeholder="Search data points..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer" data-icon="contrast">contrast</span>
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a female geophysicist in her late 30s, wearing technical field gear, set against a blurred background of a geological survey site. The lighting is crisp and natural, with a focus on corporate professional clarity. The color palette is muted with deep blues and greys to match the dark UI system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF7KoTUYUDpMFXq2qXeNzoldYovEBJ7on-yJhHUx_AxFOziLjFi4hq2zZhPuqyAOF52mBppmFSzykp_KHoMtcIPPIuQizpBY6G9rATOfPKTffyhLAZY7Fu664N52JN1oL8jzUqXpyzrSbuHlC_CNPe9qaA4CN_sQ8Zv69BIbaDb91o_ypigl5grcVhFcIkhTv336Nt18pMNiMezCzkFRCbzJrSEO6Nmt3-oWGMq69wLMcDSpWuN52Dc2_Ucb0j2t-XxyWoIcKDNOwq"/>
+</div>
+</header>
+<!-- SPLIT PANE CONTENT -->
+<div class="flex-1 flex overflow-hidden">
+<!-- LEFT PANE: QC TOOLS -->
+<section class="w-[420px] bg-surface-container-low border-r border-outline-variant flex flex-col overflow-y-auto scrollbar-thin">
+<div class="p-md space-y-md">
+<!-- Metrics Summary Grid -->
+<div class="grid grid-cols-3 gap-sm">
+<div class="p-sm bg-surface-container-high rounded border border-outline-variant">
+<p class="font-caption text-on-surface-variant">MIN VAL</p>
+<p class="font-data-mono text-primary text-h4">48202</p>
+<p class="font-caption text-on-surface-variant mt-1 text-[10px]">nT (Total Field)</p>
+</div>
+<div class="p-sm bg-surface-container-high rounded border border-outline-variant">
+<p class="font-caption text-on-surface-variant">MAX VAL</p>
+<p class="font-data-mono text-tertiary text-h4">51984</p>
+<p class="font-caption text-on-surface-variant mt-1 text-[10px]">nT (Total Field)</p>
+</div>
+<div class="p-sm bg-surface-container-high rounded border border-outline-variant">
+<p class="font-caption text-on-surface-variant">STD DEV</p>
+<p class="font-data-mono text-secondary text-h4">42.5</p>
+<p class="font-caption text-on-surface-variant mt-1 text-[10px]">Variation</p>
+</div>
+</div>
+<!-- Value Distribution Histogram -->
+<div class="p-md bg-surface-container rounded border border-outline-variant">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-h4 text-h4">Value Distribution</h3>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="info">info</span>
+</div>
+<div class="h-32 flex items-end gap-[2px]">
+<!-- Mock Histogram Bars -->
+<div class="bg-primary/20 w-full h-[15%]" title="48200 nT"></div>
+<div class="bg-primary/20 w-full h-[25%]" title="48500 nT"></div>
+<div class="bg-primary/40 w-full h-[45%]" title="48800 nT"></div>
+<div class="bg-primary/60 w-full h-[85%]" title="49100 nT"></div>
+<div class="bg-primary/100 w-full h-[100%]" title="49400 nT"></div>
+<div class="bg-primary/80 w-full h-[70%]" title="49700 nT"></div>
+<div class="bg-primary/50 w-full h-[40%]" title="50000 nT"></div>
+<div class="bg-primary/20 w-full h-[20%]" title="50300 nT"></div>
+<div class="bg-primary/10 w-full h-[10%]" title="50600 nT"></div>
+</div>
+<div class="flex justify-between mt-sm">
+<span class="font-label-mono text-on-surface-variant">48k nT</span>
+<span class="font-label-mono text-on-surface-variant">52k nT</span>
+</div>
+</div>
+<!-- Correction Toggles -->
+<div class="space-y-sm">
+<h3 class="font-h4 text-h4 px-xs">Correction Filters</h3>
+<div class="bg-surface-container rounded border border-outline-variant divide-y divide-outline-variant">
+<!-- Toggle Item -->
+<div class="p-md flex justify-between items-center group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<span class="font-body font-bold">IGRF Correction</span>
+<span class="font-caption text-on-surface-variant">International Geomagnetic Reference Field</span>
+</div>
+<div class="w-10 h-5 bg-primary-container rounded-full relative p-[2px] flex items-center justify-end">
+<div class="w-4 h-4 bg-on-primary-container rounded-full shadow-sm"></div>
+</div>
+</div>
+<!-- Toggle Item -->
+<div class="p-md flex justify-between items-center group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<span class="font-body font-bold">Diurnal Correction</span>
+<span class="font-caption text-on-surface-variant">Base Station Delta Subtraction</span>
+</div>
+<div class="w-10 h-5 bg-primary-container rounded-full relative p-[2px] flex items-center justify-end">
+<div class="w-4 h-4 bg-on-primary-container rounded-full shadow-sm"></div>
+</div>
+</div>
+<!-- Toggle Item -->
+<div class="p-md flex justify-between items-center group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col opacity-50">
+<span class="font-body font-bold">Heading Error</span>
+<span class="font-caption text-on-surface-variant">Orientation deviation adjustment</span>
+</div>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative p-[2px] flex items-center justify-start border border-outline-variant">
+<div class="w-4 h-4 bg-outline rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Station Anomaly List -->
+<div class="space-y-sm">
+<h3 class="font-h4 text-h4 px-xs">Recent Flagged Anomalies</h3>
+<div class="overflow-x-auto rounded border border-outline-variant">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high sticky top-0 font-label-mono text-on-surface-variant border-b border-outline-variant">
+<tr>
+<th class="px-md py-sm">ID</th>
+<th class="px-md py-sm">Error (nT)</th>
+<th class="px-md py-sm">Status</th>
+</tr>
+</thead>
+<tbody class="font-data-mono divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-highest/50 cursor-pointer">
+<td class="px-md py-sm text-on-surface">ST-0942</td>
+<td class="px-md py-sm text-error">+42.1</td>
+<td class="px-md py-sm flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-[10px] uppercase font-bold text-error">Fail</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/50 cursor-pointer">
+<td class="px-md py-sm text-on-surface">ST-0988</td>
+<td class="px-md py-sm text-tertiary">+12.4</td>
+<td class="px-md py-sm flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[10px] uppercase font-bold text-tertiary">Warning</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/50 cursor-pointer">
+<td class="px-md py-sm text-on-surface">ST-1012</td>
+<td class="px-md py-sm text-secondary">-0.8</td>
+<td class="px-md py-sm flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] uppercase font-bold text-secondary">Pass</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Footer Pane Action -->
+<div class="mt-auto p-md border-t border-outline-variant bg-surface-container-high/30">
+<button class="w-full bg-primary-container text-on-primary-container py-sm font-h4 rounded-lg flex items-center justify-center gap-sm hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="auto_fix">auto_fix</span>
+                        Run Full QC Batch
+                    </button>
+</div>
+</section>
+<!-- RIGHT PANE: INTERACTIVE MAP -->
+<section class="flex-1 relative bg-surface-container-lowest">
+<!-- Map Placeholder -->
+<div class="absolute inset-0 z-0 overflow-hidden" data-alt="A high-resolution satellite topographical map of a desert exploration site, viewed from a vertical top-down perspective. The terrain shows variations in soil density and rocky outcroppings. Overlaid on the map are thousands of tiny, precise colored dots forming a structured grid pattern, representing geophysical stations. The dots are coded in Survey Green, Anomaly Yellow, and Error Red, creating a vibrant data visualization aesthetic that contrasts against the dark, high-contrast desert terrain. The lighting is artificial and technical, suggesting a high-end data analysis software." data-location="Kalahari Desert" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBU4B13-0JFN0x_6e10HP0gzBAgOL6_ZYX_jk86x-BRc3bVCiOIPilVhzX0kwUybY1Prld4GGqus3RuCz8cry1Dzja2rPSDdAZkdDqnYm24nRKO9uPTr5aReFQ_z4AddxB_6Oq4NBRW_A4Ni27WFn9LPJ8UulRSAaKKuPScTg0f-kNuu1Wg6_Kp0qHgi6Ak7S9Kse4iGilq9zrcu_3qtRTvsZL9XP3-4Di4twJyWzzmgpLZaaNPhAZGdkmAXn2Qqd7Zfwxc3EjtVHkY')">
+</div>
+<!-- Floating Toolbars (Glassmorphic) -->
+<div class="absolute top-md right-md z-10 flex flex-col gap-sm">
+<div class="glass p-xs flex flex-col gap-xs rounded-xl">
+<button class="p-sm text-on-surface hover:bg-primary/20 rounded-lg transition-colors" title="Zoom In">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<button class="p-sm text-on-surface hover:bg-primary/20 rounded-lg transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<div class="h-[1px] bg-outline-variant mx-1"></div>
+<button class="p-sm text-on-surface hover:bg-primary/20 rounded-lg transition-colors" title="Locate Me">
+<span class="material-symbols-outlined" data-icon="my_location">my_location</span>
+</button>
+</div>
+<div class="glass p-xs flex flex-col gap-xs rounded-xl">
+<button class="p-sm text-on-surface hover:bg-primary/20 rounded-lg transition-colors" title="Map Layers">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="p-sm text-on-surface hover:bg-primary/20 rounded-lg transition-colors" title="Measure">
+<span class="material-symbols-outlined" data-icon="straighten">straighten</span>
+</button>
+</div>
+</div>
+<!-- Map Legend -->
+<div class="absolute bottom-md left-md z-10 glass p-md rounded-xl max-w-xs shadow-2xl">
+<h4 class="font-h4 text-h4 mb-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="legend_toggle">legend_toggle</span>
+                        Station QC Status
+                    </h4>
+<div class="space-y-sm">
+<div class="flex items-center gap-md">
+<span class="w-3 h-3 rounded-full bg-secondary shadow-[0_0_8px_rgba(109,221,129,0.5)]"></span>
+<span class="font-body text-on-surface">Pass (Variance &lt; 5 nT)</span>
+<span class="ml-auto font-data-mono text-on-surface-variant">8,421</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="w-3 h-3 rounded-full bg-tertiary shadow-[0_0_8px_rgba(251,188,5,0.5)]"></span>
+<span class="font-body text-on-surface">Warning (5-20 nT)</span>
+<span class="ml-auto font-data-mono text-on-surface-variant">142</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></span>
+<span class="font-body text-on-surface">Fail (Critical Anomaly)</span>
+<span class="ml-auto font-data-mono text-on-surface-variant">24</span>
+</div>
+</div>
+<div class="mt-md pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-caption text-on-surface-variant">Coordinates:</span>
+<span class="font-data-mono text-primary text-[11px]">23° 26' 12" S | 17° 05' 08" E</span>
+</div>
+</div>
+<!-- Bottom Floating Search/Filter Overlay -->
+<div class="absolute bottom-md right-md z-10 flex gap-sm">
+<div class="glass px-md py-sm rounded-full flex items-center gap-md">
+<div class="flex items-center gap-xs border-r border-outline-variant pr-md">
+<span class="material-symbols-outlined text-secondary" data-icon="filter_list">filter_list</span>
+<span class="font-label-mono text-on-surface">Active Filter: Critical</span>
+</div>
+<span class="font-caption text-on-surface-variant">Showing 24 of 8,587 stations</span>
+</div>
+</div>
+<!-- Subtle Animated Scanline Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,20,20,0)_50%,rgba(173,199,255,0.2)_50%)] bg-[length:100%_4px] animate-pulse"></div>
+</section>
+</div>
+<!-- STATUS BAR -->
+<footer class="h-8 bg-surface-container-lowest border-t border-outline-variant flex items-center px-md justify-between z-50">
+<div class="flex items-center gap-xl text-on-surface-variant font-label-mono text-[10px]">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>SYSTEM READY</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[12px]" data-icon="database">database</span>
+<span>LATENCY: 14ms</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[12px]" data-icon="storage">storage</span>
+<span>BUFFER: 92%</span>
+</div>
+</div>
+<div class="flex items-center gap-md font-label-mono text-[10px] text-on-surface-variant">
+<span>CPU: 14%</span>
+<span>MEM: 2.4 GB / 16 GB</span>
+</div>
+</footer>
+</main>
+<!-- Contextual FAB Suppression: Hiding FAB as it's a detail/tool focused screen -->
+<script>
+        // Micro-interaction: Mocking the scan of data points
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("GeoAnalysis Pro QC Engine Initialized...");
+            
+            // Interactive Histogram effect
+            const bars = document.querySelectorAll('.bg-primary\/20, .bg-primary\/40, .bg-primary\/60, .bg-primary\/100, .bg-primary\/80, .bg-primary\/50, .bg-primary\/10');
+            bars.forEach(bar => {
+                bar.addEventListener('mouseenter', () => {
+                    bar.style.filter = 'brightness(1.5)';
+                    bar.style.transition = 'all 0.1s ease';
+                });
+                bar.addEventListener('mouseleave', () => {
+                    bar.style.filter = 'brightness(1)';
+                });
+            });
+        });
+    </script>
+</body></html>

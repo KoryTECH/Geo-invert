@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Reports &amp; Exports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#e3e2e2",
+                    "background": "#121414",
+                    "primary": "#adc7ff",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-container-highest": "#343535",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#003210",
+                    "surface-container-low": "#1a1c1c",
+                    "inverse-on-surface": "#2f3131",
+                    "secondary-fixed": "#89fa9b",
+                    "surface-tint": "#adc7ff",
+                    "surface-container": "#1e2020",
+                    "surface-container-high": "#292a2a",
+                    "tertiary-container": "#987000",
+                    "surface-variant": "#343535",
+                    "on-secondary": "#003914",
+                    "on-secondary-fixed": "#002108",
+                    "primary-container": "#1a73e8",
+                    "inverse-primary": "#005bc0",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-primary-container": "#ffffff",
+                    "outline": "#8b909f",
+                    "on-surface-variant": "#c1c6d6",
+                    "primary-fixed-dim": "#adc7ff",
+                    "tertiary": "#fbbc05",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#fbbc05",
+                    "on-tertiary-fixed": "#261a00",
+                    "on-tertiary": "#402d00",
+                    "secondary-container": "#30a550",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "on-background": "#e3e2e2",
+                    "surface-container-lowest": "#0d0e0f",
+                    "tertiary-fixed": "#ffdfa0",
+                    "on-primary-fixed": "#001a41",
+                    "surface-bright": "#38393a",
+                    "on-secondary-fixed-variant": "#005320",
+                    "on-tertiary-container": "#ffffff",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#6ddd81",
+                    "on-surface": "#e3e2e2",
+                    "on-primary": "#002e68",
+                    "surface": "#121414",
+                    "outline-variant": "#414754",
+                    "secondary": "#6ddd81",
+                    "surface-dim": "#121414",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sidebar_collapsed": "64px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "sidebar_width": "260px"
+            },
+            "fontFamily": {
+                    "label-mono": ["JetBrains Mono"],
+                    "h3": ["Inter"],
+                    "h2": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "h1": ["Inter"],
+                    "h4": ["Inter"],
+                    "caption": ["Inter"],
+                    "body": ["Inter"]
+            },
+            "fontSize": {
+                    "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                    "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            @apply bg-background text-on-surface font-body;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill {
+            @apply bg-surface-container-highest text-primary border-l-4 border-primary;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            @apply bg-surface-container-lowest;
+        }
+        ::-webkit-scrollbar-thumb {
+            @apply bg-outline-variant rounded-full;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-[260px] sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md shrink-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-on-surface-variant opacity-70">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm rounded-lg transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-lg">
+<span class="font-h4 text-h4 font-bold text-on-surface">Reports &amp; Exports</span>
+<div class="hidden md:flex gap-md">
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200" href="#">Project Alpha</a>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200" href="#">Project Beta</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer p-xs transition-all duration-200">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer p-xs transition-all duration-200">contrast</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female geophysicist wearing a sleek headset, set against a blurred background of a high-tech data visualization control room. The lighting is cool-toned with highlights of cyan and deep blue, matching a corporate modern tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQe8a3aRsPxqToN4f1cYTjGO9mvrzdajtRgFKwig2wnc--eLXXRRq92J7AoTu2rZvDJ_S6L4FAc712E-QzDAt7lewihq0uymK0ikT3Zwlnl6UEDhbLkY16bG5GvE5xpKwlAIuRJM9VLdVXGgHnEBGoUCBQcrAh_bxQJPooFvEx9GC3NR4azwfvd1lugGCyp9xLezsbULoJz9p_tfQrTr55I3k0hOuyj_d-6Lr16m80kHtleU_XMvQmndqAYuYSaOWCQ2gyHj2v2XAx"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-lg space-y-xl max-w-7xl mx-auto w-full">
+<!-- Section: Export Formats Grid -->
+<section>
+<div class="flex items-end justify-between mb-md">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface mb-xs">Data Export</h2>
+<p class="font-body text-on-surface-variant">Select a technical format for raw data transfer.</p>
+</div>
+<span class="font-label-mono text-label-mono text-primary bg-primary-container/20 px-sm py-xs rounded">LAST EXPORT: 2H AGO</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- GeoJSON Card -->
+<div class="bg-surface-container hover:bg-surface-container-high border border-outline-variant p-md rounded-lg group cursor-pointer transition-all duration-200 hover:border-primary">
+<div class="flex items-start justify-between mb-lg">
+<div class="w-10 h-10 bg-primary-container/10 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">map</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">download</span>
+</div>
+<h3 class="font-h4 text-h4 mb-xs">GeoJSON</h3>
+<p class="font-caption text-on-surface-variant mb-md">Standard format for GIS integration and geospatial features.</p>
+<div class="flex items-center gap-xs font-data-mono text-label-mono text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            COMPATIBLE: QGIS, ARCGIS
+                        </div>
+</div>
+<!-- CSV Card -->
+<div class="bg-surface-container hover:bg-surface-container-high border border-outline-variant p-md rounded-lg group cursor-pointer transition-all duration-200 hover:border-primary">
+<div class="flex items-start justify-between mb-lg">
+<div class="w-10 h-10 bg-primary-container/10 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">table_chart</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">download</span>
+</div>
+<h3 class="font-h4 text-h4 mb-xs">CSV / Excel</h3>
+<p class="font-caption text-on-surface-variant mb-md">Tabular data for statistical analysis and spreadsheet processing.</p>
+<div class="flex items-center gap-xs font-data-mono text-label-mono text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            COMPATIBLE: PYTHON, EXCEL
+                        </div>
+</div>
+<!-- UBC-GIF 3D Card -->
+<div class="bg-surface-container hover:bg-surface-container-high border border-outline-variant p-md rounded-lg group cursor-pointer transition-all duration-200 hover:border-primary">
+<div class="flex items-start justify-between mb-lg">
+<div class="w-10 h-10 bg-primary-container/10 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">view_in_ar</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">download</span>
+</div>
+<h3 class="font-h4 text-h4 mb-xs">UBC-GIF 3D</h3>
+<p class="font-caption text-on-surface-variant mb-md">Voxelized mesh data for 3D inversion and geophysical modeling.</p>
+<div class="flex items-center gap-xs font-data-mono text-label-mono text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                            COMPATIBLE: GEOSOFT, PETREL
+                        </div>
+</div>
+<!-- SEG-Y Card -->
+<div class="bg-surface-container hover:bg-surface-container-high border border-outline-variant p-md rounded-lg group cursor-pointer transition-all duration-200 hover:border-primary">
+<div class="flex items-start justify-between mb-lg">
+<div class="w-10 h-10 bg-primary-container/10 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">waves</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">download</span>
+</div>
+<h3 class="font-h4 text-h4 mb-xs">SEG-Y</h3>
+<p class="font-caption text-on-surface-variant mb-md">Professional seismic data format for trace-based recordings.</p>
+<div class="flex items-center gap-xs font-data-mono text-label-mono text-error">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                            COMPATIBLE: ONDUCTOR, SEISWARE
+                        </div>
+</div>
+</div>
+</section>
+<!-- Section: PDF Report Builder (The "Complex" UI Pattern) -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">PDF Report Builder</h2>
+<p class="font-body text-on-surface-variant">Compile technical summaries and visualization assets.</p>
+</div>
+<button class="bg-primary-container hover:bg-primary-container/90 text-on-primary-container px-lg py-md rounded font-h4 flex items-center gap-md transition-all active:scale-95">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                        Generate PDF
+                    </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3">
+<!-- Config Column -->
+<div class="p-lg border-r border-outline-variant space-y-lg">
+<div>
+<label class="font-caption text-primary uppercase tracking-widest mb-sm block">1. Content Sections</label>
+<div class="space-y-sm">
+<label class="flex items-center gap-md p-sm rounded hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-transparent text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body text-on-surface">Title Page &amp; Metadata</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-transparent text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body text-on-surface">Quality Control (QC) Summary</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-transparent text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body text-on-surface">Regional Maps (Interpolated)</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant">
+<input class="w-4 h-4 rounded border-outline-variant bg-transparent text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body text-on-surface">Anomaly Table &amp; Coordinates</span>
+</label>
+<label class="flex items-center gap-md p-sm rounded hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant">
+<input class="w-4 h-4 rounded border-outline-variant bg-transparent text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body text-on-surface">3D Inversion Slices</span>
+</label>
+</div>
+</div>
+<div>
+<label class="font-caption text-primary uppercase tracking-widest mb-sm block">2. Template Style</label>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-high border-2 border-primary p-sm rounded text-center cursor-pointer">
+<div class="h-16 bg-surface mb-xs flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined">article</span>
+</div>
+<span class="font-label-mono text-label-mono">Standard Tech</span>
+</div>
+<div class="bg-surface-container border border-outline-variant hover:border-primary p-sm rounded text-center cursor-pointer transition-colors">
+<div class="h-16 bg-surface mb-xs flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<span class="font-label-mono text-label-mono">Grid Focus</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Preview Column -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-xl relative overflow-hidden flex items-center justify-center min-h-[400px]">
+<!-- Subtle background texture -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+<!-- PDF Mockup -->
+<div class="w-[450px] aspect-[1/1.414] bg-white text-black p-xl shadow-2xl relative z-10 flex flex-col gap-lg">
+<div class="border-b-4 border-primary-container pb-md">
+<p class="text-[10px] font-bold text-gray-400 mb-xs">OFFICIAL TECHNICAL REPORT</p>
+<h4 class="text-xl font-bold leading-tight">Project Alpha: Magnetic Survey Analysis</h4>
+<p class="text-[12px] text-gray-500 mt-xs">Report ID: GA-2023-009-P1</p>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="h-32 bg-gray-100 flex items-center justify-center relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="A detailed geophysical heatmap visualization showing magnetic intensity across a rugged terrain. The image features a spectrum of colors from deep violet to brilliant red, with contour lines overlaid indicating varying levels of geological anomalies. The lighting is digital and crisp, reflecting a high-precision scientific analysis tool." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpxySiYCk5Q3oySuCBVmCr_KTF3gF_YpoFKXtdZhddE6u36FT53DtnhReYiLc3H_PkaHzuvhEp6Llc3gAQcliiyAPbwNyc8dm87Jb8LBb3luF9PQQVF3cmQjE6A0RcfkY6HzBEOXXiq0rHwRVouKCs2YNc9QtyKoCj0Cz_gU7dAE16rJxXZZVFkG9p6dW1z-689RGDi644Ylzsd9T0DFYxL_8SK0CG4PEOfWDM5Bp572rg0c8AGECcZXLIlQeb4nXus7H-VjpxxHVm"/>
+<div class="absolute inset-0 border border-gray-200"></div>
+</div>
+<div class="h-32 bg-gray-100 flex items-center justify-center relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="A 3D topographical mesh rendering of a subsurface geological structure, shown from an isometric perspective. The model displays layers of earth with different textures and colors, indicating various soil and rock densities. Transparent 'slicing' planes cut through the model to reveal internal data points and survey lines in bright blue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgpDBN_3kyOKHCOLXUcIpDCKXZTi5NzCyQY1dirC6VH3c_Z9SpDzO2Aqfq4ZD3WDXocCITOcZkmYdyvhHqum_7VLK37EG-o0OpvB2BsHXmJPlhNMpQ-XHj_ZOb0IRsWRoUJ1G4rAZvXw1TS15WsduGVKCDpBkt42yOTvzNPJBg0VUGA6AjMmnAtXpKJW8hdZ2-YM7b138IKCM9Qi5_qJWwVBH697R922S6JhinfYKh_Hh0DGGHtvknIlBrJwlq-qzaFKaVpd5Qmnib"/>
+<div class="absolute inset-0 border border-gray-200"></div>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="h-2 w-full bg-gray-200 rounded"></div>
+<div class="h-2 w-4/5 bg-gray-200 rounded"></div>
+<div class="h-2 w-full bg-gray-200 rounded"></div>
+<div class="h-2 w-2/3 bg-gray-200 rounded"></div>
+</div>
+<div class="mt-auto pt-md border-t border-gray-100 flex justify-between items-center">
+<span class="text-[10px] text-gray-400 font-mono">CONFIDENTIAL // GEOANALYSIS PRO</span>
+<span class="text-[10px] text-gray-400 font-mono">Page 01 of 42</span>
+</div>
+</div>
+<!-- Floating Zoom Control -->
+<div class="absolute bottom-md right-md flex flex-col gap-xs">
+<button class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-lg"><span class="material-symbols-outlined">add</span></button>
+<button class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all shadow-lg"><span class="material-symbols-outlined">remove</span></button>
+</div>
+</div>
+</div>
+<!-- Footer Status -->
+<div class="px-lg py-sm bg-surface-container-high border-t border-outline-variant flex items-center gap-lg">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">TEMPLATE VALIDATED</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">attachment</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">4 ASSETS LINKED</span>
+</div>
+<div class="flex items-center gap-xs ml-auto">
+<span class="font-label-mono text-label-mono text-on-surface-variant">ESTIMATED SIZE: 14.2 MB</span>
+</div>
+</div>
+</section>
+<!-- Bottom Action Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-panel p-lg rounded-xl flex items-center gap-xl border border-outline-variant/30">
+<div class="p-md bg-secondary-container/20 rounded-full text-secondary">
+<span class="material-symbols-outlined text-h1">cloud_upload</span>
+</div>
+<div>
+<h4 class="font-h4 text-h4">Direct API Transfer</h4>
+<p class="font-body text-on-surface-variant">Stream processed results directly to your Azure or AWS S3 endpoint.</p>
+<button class="mt-md text-primary font-body flex items-center gap-xs hover:underline">Configure Webhook <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<div class="glass-panel p-lg rounded-xl flex items-center gap-xl border border-outline-variant/30">
+<div class="p-md bg-tertiary-container/20 rounded-full text-tertiary">
+<span class="material-symbols-outlined text-h1">history</span>
+</div>
+<div>
+<h4 class="font-h4 text-h4">Export History</h4>
+<p class="font-body text-on-surface-variant">Access and re-download previous report versions from the past 30 days.</p>
+<button class="mt-md text-primary font-body flex items-center gap-xs hover:underline">View Log <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple hover effect for report builder sections
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const label = this.closest('label');
+                if (this.checked) {
+                    label.classList.add('border-primary/30', 'bg-primary-container/5');
+                } else {
+                    label.classList.remove('border-primary/30', 'bg-primary-container/5');
+                }
+            });
+        });
+
+        // Template selector logic
+        const templates = document.querySelectorAll('.grid-cols-2 > div');
+        templates.forEach(t => {
+            t.addEventListener('click', () => {
+                templates.forEach(other => {
+                    other.classList.remove('border-primary', 'bg-surface-container-high', 'border-2');
+                    other.classList.add('border-outline-variant', 'bg-surface-container');
+                });
+                t.classList.add('border-primary', 'bg-surface-container-high', 'border-2');
+                t.classList.remove('border-outline-variant', 'bg-surface-container');
+            });
+        });
+    </script>
+</body></html>

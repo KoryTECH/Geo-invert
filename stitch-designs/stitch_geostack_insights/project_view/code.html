@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Project View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#e3e2e2",
+                    "background": "#121414",
+                    "primary": "#adc7ff",
+                    "primary-container": "#1a73e8",
+                    "surface-container-highest": "#343535",
+                    "surface-container-low": "#1a1c1c",
+                    "surface-container-high": "#292a2a",
+                    "surface-container": "#1e2020",
+                    "on-surface": "#e3e2e2",
+                    "on-surface-variant": "#c1c6d6",
+                    "outline": "#8b909f",
+                    "outline-variant": "#414754",
+                    "secondary": "#6ddd81",
+                    "tertiary": "#fbbc05",
+                    "surface": "#121414",
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sidebar_width": "260px"
+            },
+            "fontFamily": {
+                    "label-mono": ["JetBrains Mono"],
+                    "h3": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "h4": ["Inter"],
+                    "body": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-overlay {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #414754; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b909f; }
+        
+        .tree-item-active {
+            border-left: 3px solid #adc7ff;
+            background-color: #343535;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden h-screen flex">
+<!-- Predicted SideNavBar -->
+<aside class="flex flex-col h-full py-md bg-surface-container-low border-r border-outline-variant w-sidebar_width sticky left-0 top-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary dark:text-primary">GeoAnalysis Pro</h1>
+<p class="text-[10px] uppercase tracking-widest text-outline">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md pt-md border-t border-outline-variant/30">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Predicted TopNavBar -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant sticky z-50">
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h2 class="font-h4 text-h4 font-bold text-on-surface">Project Alpha</h2>
+</div>
+<div class="hidden md:flex gap-md">
+<a class="text-primary font-bold border-b-2 border-primary pb-xs" href="#">Overview</a>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200" href="#">Processing</a>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors duration-200" href="#">Analysis</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-transform active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-transform active:scale-95">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a geophysicist in a high-tech lab environment, wearing modern technical apparel. The lighting is soft and cinematic with a cool-toned industrial background. The image is crisp, clean, and professional, fitting a high-end corporate data analysis application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY3mFqk3nSKkx5_tLXRZ_E9bZa3eGfhPxVz7F6IZf-_dZiRlspY_X4CPLWfF9Hmu1JflpV7MlAxz1luDDPhdd48mm37QjrPLGKS6EJyWJEsi0CDU8znyfixdudj-MaJwy41smS70zKu3CedDPqmol7Irt5Ddt3PCjoV5rwdaGpqj6HGdGGYzPZ5vwlbFRk_J6-WTy5fI_ALgyHiz17e4A6zkkcReds1POqMJc12sSptQ-GIHbRVkILamLOpky2p0KpMPpcr3bQGWhe"/>
+</div>
+</div>
+</header>
+<!-- Split Panel Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Project Info & Tree List -->
+<section class="w-80 flex flex-col border-r border-outline-variant bg-surface-container-low shrink-0 relative">
+<div class="p-md space-y-md border-b border-outline-variant/30">
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-tighter">Project Identity</label>
+<h3 class="font-h3 text-h3 text-on-surface truncate">Northern Basin Survey</h3>
+<p class="text-caption text-on-surface-variant mt-xs leading-tight">Sub-surface mapping for tectonic plate shifts and localized mineral density anomalies.</p>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container p-xs rounded border border-outline-variant/20">
+<label class="block text-[9px] text-outline uppercase">CRS</label>
+<span class="font-data-mono text-label-mono text-secondary">WGS84 / UTM 32N</span>
+</div>
+<div class="bg-surface-container p-xs rounded border border-outline-variant/20">
+<label class="block text-[9px] text-outline uppercase">Status</label>
+<span class="font-data-mono text-label-mono text-tertiary">Active Capture</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-xs space-y-xs">
+<div class="px-sm py-xs">
+<h4 class="text-[11px] font-bold text-outline uppercase tracking-wider">Methodology Explorer</h4>
+</div>
+<!-- Tree Section: Magnetic -->
+<details class="group" open="">
+<summary class="flex items-center gap-xs px-sm py-sm cursor-pointer hover:bg-surface-container-high transition-colors text-on-surface-variant list-none">
+<span class="material-symbols-outlined text-[18px] group-open:rotate-90 transition-transform">chevron_right</span>
+<span class="material-symbols-outlined text-[18px] text-primary">flare</span>
+<span class="font-body text-body font-medium flex-1">Magnetic Surveys</span>
+<span class="text-caption bg-surface-container-highest px-xs rounded">3</span>
+</summary>
+<div class="pl-xl space-y-xs py-xs">
+<div class="flex items-center gap-sm px-sm py-sm text-primary tree-item-active rounded-sm cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">map</span>
+<span class="font-data-mono text-body">MAG_SEC_001</span>
+</div>
+<div class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-container-high rounded-sm cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">map</span>
+<span class="font-data-mono text-body">MAG_SEC_002</span>
+</div>
+<div class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-container-high rounded-sm cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">map</span>
+<span class="font-data-mono text-body">MAG_SEC_005_B</span>
+</div>
+</div>
+</details>
+<!-- Tree Section: Resistivity -->
+<details class="group">
+<summary class="flex items-center gap-xs px-sm py-sm cursor-pointer hover:bg-surface-container-high transition-colors text-on-surface-variant list-none">
+<span class="material-symbols-outlined text-[18px] group-open:rotate-90 transition-transform">chevron_right</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">electric_bolt</span>
+<span class="font-body text-body font-medium flex-1">Resistivity</span>
+<span class="text-caption bg-surface-container-highest px-xs rounded">1</span>
+</summary>
+<div class="pl-xl space-y-xs py-xs">
+<div class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-container-high rounded-sm cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">reorder</span>
+<span class="font-data-mono text-body">RES_VERT_ALPHA</span>
+</div>
+</div>
+</details>
+<!-- Tree Section: Seismic (Empty state example) -->
+<details class="group opacity-50">
+<summary class="flex items-center gap-xs px-sm py-sm cursor-not-allowed text-on-surface-variant list-none">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="material-symbols-outlined text-[18px]">waves</span>
+<span class="font-body text-body font-medium flex-1">Seismic Data</span>
+<span class="text-caption bg-surface-container-highest px-xs rounded">0</span>
+</summary>
+</details>
+</div>
+<!-- Floating Action Button (FAB) -->
+<button class="absolute bottom-md right-md bg-primary-container text-on-primary-container p-md rounded-full shadow-lg hover:brightness-110 active:scale-95 flex items-center gap-sm group transition-all">
+<span class="material-symbols-outlined">add</span>
+<span class="font-h4 text-h4 hidden group-hover:inline pr-xs">Add Survey</span>
+</button>
+</section>
+<!-- Right Panel: Map & Views -->
+<section class="flex-1 flex flex-col relative">
+<!-- View Tabs Over the Map -->
+<div class="absolute top-md left-1/2 -translate-x-1/2 z-10 glass-overlay rounded-lg flex p-1">
+<button class="px-md py-sm bg-primary-container text-on-primary-container rounded flex items-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]">public</span>
+<span class="font-h4 text-h4">Map</span>
+</button>
+<button class="px-md py-sm text-on-surface-variant hover:text-on-surface flex items-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+<span class="font-h4 text-h4">Table</span>
+</button>
+<button class="px-md py-sm text-on-surface-variant hover:text-on-surface flex items-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]">gallery_thumbnail</span>
+<span class="font-h4 text-h4">Gallery</span>
+</button>
+</div>
+<!-- Floating Map Controls -->
+<div class="absolute right-md top-md z-10 flex flex-col gap-sm">
+<div class="glass-overlay rounded-lg flex flex-col p-1">
+<button class="p-sm text-on-surface hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined">add</span></button>
+<button class="p-sm text-on-surface hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined">remove</span></button>
+</div>
+<div class="glass-overlay rounded-lg flex flex-col p-1">
+<button class="p-sm text-on-surface hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined">layers</span></button>
+<button class="p-sm text-on-surface hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined">my_location</span></button>
+</div>
+</div>
+<!-- Map Container -->
+<div class="flex-1 w-full bg-surface-container-lowest relative overflow-hidden">
+<!-- Map Graphic Placeholder -->
+<div class="w-full h-full opacity-60" data-alt="A dark-mode satellite GIS map of a jagged volcanic coastline. Overlaid on the map are semi-transparent vector polygons and heat-map gradients in shades of primary blue and electric green, representing sub-surface survey data. The aesthetic is ultra-modern, high-contrast, and technical, resembling professional data visualization software like MapLibre or ArcGIS Pro." data-location="Reykjavik, Iceland" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCvtMjg8Mdt2qMZyWl9yUiyWo_QTc25-r7SrasErb8beuM8fSOh1rRk6KaXKzcX920ha2bFDM4LlTOFEuBb6y24KBoyusmcyGHXZXaAEL9Egd6LaR7yaGpQltIm0cu6HTjL4gk02TcLka3v6SbTjuHJ25gZRsBI_h_SQqQnFRzbq0DyBtzxteoz_wD81FO6DI5ueKdAA4X7WM7kcADbyzumx2ifzVQtNRZTGLhfBecxSG3oHtntbua3enSiLKVhwpGCrkPhtfj_UNp8')"></div>
+<!-- SVG Overlay for 'Surveys' -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewbox="0 0 1000 1000">
+<path d="M400,300 L600,250 L650,450 L420,500 Z" fill="rgba(173, 199, 255, 0.15)" stroke="#adc7ff" stroke-dasharray="4" stroke-width="2"></path>
+<circle class="animate-pulse" cx="500" cy="380" fill="#adc7ff" r="8"></circle>
+<text class="pointer-events-auto" fill="#adc7ff" font-family="JetBrains Mono" font-size="12" x="515" y="385">MAG_SEC_001</text>
+<path d="M200,600 L350,550 L380,750 L220,800 Z" fill="rgba(109, 221, 129, 0.15)" stroke="#6ddd81" stroke-width="2"></path>
+</svg>
+<!-- Coordinate Display Footer (HUD style) -->
+<div class="absolute bottom-md left-md glass-overlay px-md py-sm rounded flex gap-xl pointer-events-none">
+<div class="flex flex-col">
+<span class="text-[9px] text-outline uppercase font-bold">Latitude</span>
+<span class="font-data-mono text-label-mono text-primary">64° 08' 07" N</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[9px] text-outline uppercase font-bold">Longitude</span>
+<span class="font-data-mono text-label-mono text-primary">21° 53' 43" W</span>
+</div>
+<div class="flex flex-col border-l border-outline-variant/30 pl-xl">
+<span class="text-[9px] text-outline uppercase font-bold">Zoom</span>
+<span class="font-data-mono text-label-mono">14.5z</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<script>
+        // Micro-interaction: Sidebar toggle logic (visual only for now)
+        document.querySelectorAll('details summary').forEach(summary => {
+            summary.addEventListener('click', (e) => {
+                // Future expansion: sound effects or state management
+            });
+        });
+
+        // Simple coordinate animation for HUD
+        const latSpan = document.querySelectorAll('.font-data-mono')[3];
+        const lonSpan = document.querySelectorAll('.font-data-mono')[4];
+        
+        setInterval(() => {
+            if(latSpan && lonSpan) {
+                const latBase = 64.1352;
+                const lonBase = -21.8952;
+                const r1 = (Math.random() * 0.001).toFixed(4);
+                const r2 = (Math.random() * 0.001).toFixed(4);
+                // Simple display update for "live" feel
+            }
+        }, 2000);
+    </script>
+</body></html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Data Entry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-overlay {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343535;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #414754;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e2",
+                        "background": "#121414",
+                        "primary": "#adc7ff",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#343535",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#003210",
+                        "surface-container-low": "#1a1c1c",
+                        "inverse-on-surface": "#2f3131",
+                        "secondary-fixed": "#89fa9b",
+                        "surface-tint": "#adc7ff",
+                        "surface-container": "#1e2020",
+                        "surface-container-high": "#292a2a",
+                        "tertiary-container": "#987000",
+                        "surface-variant": "#343535",
+                        "on-secondary": "#003914",
+                        "on-secondary-fixed": "#002108",
+                        "primary-container": "#1a73e8",
+                        "inverse-primary": "#005bc0",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-primary-container": "#ffffff",
+                        "outline": "#8b909f",
+                        "on-surface-variant": "#c1c6d6",
+                        "primary-fixed-dim": "#adc7ff",
+                        "tertiary": "#fbbc05",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#fbbc05",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-tertiary": "#402d00",
+                        "secondary-container": "#30a550",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-background": "#e3e2e2",
+                        "surface-container-lowest": "#0d0e0f",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-primary-fixed": "#001a41",
+                        "surface-bright": "#38393a",
+                        "on-secondary-fixed-variant": "#005320",
+                        "on-tertiary-container": "#ffffff",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#6ddd81",
+                        "on-surface": "#e3e2e2",
+                        "on-primary": "#002e68",
+                        "surface": "#121414",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "surface-dim": "#121414",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_collapsed": "64px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "sidebar_width": "260px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "h4": ["Inter"],
+                        "caption": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-sidebar_width sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md shrink-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-on-surface-variant">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<!-- Dashboard -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<!-- Projects -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<!-- Surveys -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<!-- Data Entry (ACTIVE) -->
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-xl">
+<div class="relative">
+<span class="absolute left-md top-1/2 -translate-y-1/2 material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-surface-container text-on-surface border-none rounded-lg pl-10 pr-md py-xs text-body focus:ring-1 focus:ring-primary w-64" placeholder="Quick search data points..." type="text"/>
+</div>
+<nav class="flex gap-md">
+<span class="text-primary font-bold border-b-2 border-primary pb-xs cursor-default">Project Alpha</span>
+<span class="text-on-surface-variant font-body text-body hover:text-on-surface cursor-pointer transition-colors duration-200">Project Beta</span>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant cursor-pointer">
+<img class="object-cover w-full h-full" data-alt="Close-up headshot of a professional male geophysicist in outdoor field gear, soft focused geological equipment in the background, professional corporate portrait photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDPrmTuzTFhb6HSTRTuJCyHQGGrsONa0QxxBKamNAs-0xm4RYsAU6N5Rz216nIl6USz5UE7U57bUkQ72CSvmO5qBrgejlmNdhSDuMskihJA09fo4QSaULvRZm-snOGcfocffO0Ng7Sb-HsjZNwFNk9UK88Zq4PgC5gU__FHTZRhn8pkppdraKiarZPtD0qykxNxc2-BiMMfJqFH6DO3sna9xUHGdKr-vpLwQkXiZ9BwbktFkrpkoQUGZcs4TS-eMGJD5nJSkeFELiw"/>
+</div>
+</div>
+</header>
+<!-- Workspace Section -->
+<section class="flex-1 flex overflow-hidden">
+<!-- Left Column: Map Interface -->
+<div class="flex-1 relative bg-surface-container-lowest">
+<!-- Interactive Map Component -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="High-resolution satellite topographic map of a rugged terrain featuring arid plateaus and deep valleys. Overlaid with a precise cyan and white coordinate grid system and semi-transparent geological survey heatmaps in shades of amber and teal. Professional data visualization aesthetic for geophysical analysis." data-location="Nevada Desert" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBBtC9B0OCIHaUzhp-H2PAHFOB3_I1hoLIzfDs7GRnuB4Fc3uVtT8DugAlgM64T5lFOdregx9D0oUfNWMjeLyS-IYBsgEZBadZOOpI1qZV8TjNYJM5w_lJGzilhgVRGL9w-JKPWL-AlAPAUoYPPLsqHFaiD1qRHeX1CjwwE7WuHaUVZDQPjX8Fox9NZ5y063ka6OgYb5c9pCkM6UXYkk-09tRo1hxM38Bt3G6y6OD9BUSU9XfODGNhkhuRCzUDZdUXQaCXo2gXz91zi')">
+<!-- Simulated Markers -->
+<div class="absolute inset-0 cursor-crosshair" id="map-canvas">
+<div class="absolute top-1/4 left-1/3 group">
+<div class="w-3 h-3 bg-secondary rounded-full ring-4 ring-secondary/20 flex items-center justify-center">
+<div class="w-1 h-1 bg-on-secondary rounded-full"></div>
+</div>
+<div class="absolute top-full mt-xs left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container-high text-on-surface text-label-mono px-xs py-1 rounded whitespace-nowrap z-10">
+                                    ST-0214 | 36.1699°N, 115.1398°W
+                                </div>
+</div>
+</div>
+</div>
+<!-- Map Floating Toolbar -->
+<div class="absolute top-md left-md flex flex-col gap-xs">
+<div class="glass-overlay p-xs rounded-lg flex flex-col gap-xs shadow-xl">
+<button class="p-xs hover:bg-surface-container-high text-on-surface transition-colors rounded">
+<span class="material-symbols-outlined" data-icon="zoom_in">zoom_in</span>
+</button>
+<button class="p-xs hover:bg-surface-container-high text-on-surface transition-colors rounded">
+<span class="material-symbols-outlined" data-icon="zoom_out">zoom_out</span>
+</button>
+<div class="h-px bg-outline-variant mx-xs"></div>
+<button class="p-xs hover:bg-surface-container-high text-on-surface transition-colors rounded">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="p-xs hover:bg-primary-container text-on-primary-container transition-colors rounded">
+<span class="material-symbols-outlined" data-icon="add_location_alt" style="font-variation-settings: 'FILL' 1;">add_location_alt</span>
+</button>
+</div>
+</div>
+<!-- Coordinates Indicator -->
+<div class="absolute bottom-md right-md glass-overlay px-md py-sm rounded shadow-xl flex items-center gap-md">
+<div class="flex flex-col">
+<span class="text-caption text-on-surface-variant">LATITUDE</span>
+<span class="font-data-mono text-primary text-body" id="coord-lat">36.169944°N</span>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div class="flex flex-col">
+<span class="text-caption text-on-surface-variant">LONGITUDE</span>
+<span class="font-data-mono text-primary text-body" id="coord-lng">115.139832°W</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Data Entry Form -->
+<div class="w-[420px] bg-surface-container border-l border-outline-variant flex flex-col overflow-y-auto">
+<div class="p-lg">
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-h2 text-h2 text-on-surface">Data Entry</h2>
+<span class="px-sm py-xs bg-secondary-container/20 text-secondary border border-secondary/30 rounded text-label-mono">ONLINE</span>
+</div>
+<form class="space-y-md">
+<!-- Project & Survey Selectors -->
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block uppercase tracking-wider font-semibold">Project Instance</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border border-outline-variant text-on-surface rounded px-md py-sm appearance-none focus:ring-1 focus:ring-primary focus:outline-none text-body">
+<option>Project Alpha (Basin Analysis)</option>
+<option>Project Beta (Fault Mapping)</option>
+</select>
+<span class="absolute right-md top-1/2 -translate-y-1/2 material-symbols-outlined pointer-events-none text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block uppercase tracking-wider font-semibold">Survey Method</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border border-outline-variant text-on-surface rounded px-md py-sm appearance-none focus:ring-1 focus:ring-primary focus:outline-none text-body">
+<option>Magnetotellurics (MT)</option>
+<option>Ground Gravity Survey</option>
+<option>Electrical Resistivity</option>
+</select>
+<span class="absolute right-md top-1/2 -translate-y-1/2 material-symbols-outlined pointer-events-none text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="pt-md border-t border-outline-variant space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-h4 text-h4 text-on-surface-variant">Station Details</h3>
+<span class="text-label-mono text-tertiary"># AUTO-INCREMENT</span>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Station ID</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-primary font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" readonly="" type="text" value="ST-0215"/>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Elevation (m)</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Latitude (DD)</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" id="input-lat" type="text" value="36.169944"/>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Longitude (DD)</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" id="input-lng" type="text" value="-115.139832"/>
+</div>
+</div>
+<div class="pt-md border-t border-outline-variant space-y-md">
+<h3 class="font-h4 text-h4 text-on-surface-variant">MT Reading Values</h3>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">App. Resistivity (Ωm)</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" placeholder="0.00" type="number"/>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Phase (deg)</label>
+<input class="w-full bg-surface-container-high border border-outline-variant text-on-surface font-data-mono rounded px-md py-sm focus:ring-1 focus:ring-primary text-body" placeholder="0.0" type="number"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-caption text-on-surface-variant block">Notes / Observations</label>
+<textarea class="w-full bg-surface-container-high border border-outline-variant text-on-surface rounded px-md py-sm focus:ring-1 focus:ring-primary text-body resize-none" placeholder="Enter site anomalies or local noise notes..." rows="3"></textarea>
+</div>
+</div>
+</form>
+</div>
+<!-- Sticky Footer Actions -->
+<div class="mt-auto p-lg bg-surface-container border-t border-outline-variant flex flex-col gap-sm">
+<button class="w-full bg-primary-container text-on-primary-container py-md font-h4 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                            Save &amp; Next Station
+                        </button>
+<button class="w-full border border-outline text-on-surface py-md font-h4 rounded-lg hover:bg-surface-container-highest active:scale-[0.98] transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+                            Save &amp; Close Survey
+                        </button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        const map = document.getElementById('map-canvas');
+        const latDisplay = document.getElementById('coord-lat');
+        const lngDisplay = document.getElementById('coord-lng');
+        const latInput = document.getElementById('input-lat');
+        const lngInput = document.getElementById('input-lng');
+
+        map.addEventListener('mousemove', (e) => {
+            const rect = map.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Artificial coordinate calculation for visual feedback
+            const lat = (36.1699 + (y / 10000)).toFixed(6);
+            const lng = (-115.1398 - (x / 10000)).toFixed(6);
+            
+            latDisplay.textContent = `${lat}°N`;
+            lngDisplay.textContent = `${Math.abs(lng)}°W`;
+        });
+
+        map.addEventListener('click', (e) => {
+            const rect = map.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const lat = (36.1699 + (y / 10000)).toFixed(6);
+            const lng = (-115.1398 - (x / 10000)).toFixed(6);
+
+            latInput.value = lat;
+            lngInput.value = lng;
+
+            // Simple visual marker placement
+            const marker = document.createElement('div');
+            marker.className = 'absolute w-4 h-4 bg-primary rounded-full ring-4 ring-primary/20 -translate-x-1/2 -translate-y-1/2 pointer-events-none animate-pulse';
+            marker.style.left = `${x}px`;
+            marker.style.top = `${y}px`;
+            
+            // Remove previous markers for this demo session
+            const oldMarkers = map.querySelectorAll('.animate-pulse');
+            oldMarkers.forEach(m => m.remove());
+            
+            map.appendChild(marker);
+        });
+    </script>
+</body></html>
