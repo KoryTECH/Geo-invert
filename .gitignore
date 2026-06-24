@@ -46,6 +46,11 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Archives
+*.zip
+*.tar.gz
+*.7z
+
 # Data
 *.hdf5
 *.h5
