@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro | Modal System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#003914",
+                        "on-tertiary-fixed": "#261a00",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1e2020",
+                        "on-surface-variant": "#c1c6d6",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#ffffff",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-bright": "#38393a",
+                        "surface-tint": "#adc7ff",
+                        "outline": "#8b909f",
+                        "tertiary-fixed": "#ffdfa0",
+                        "surface-dim": "#121414",
+                        "surface-container-low": "#1a1c1c",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "on-tertiary": "#402d00",
+                        "surface": "#121414",
+                        "secondary-fixed-dim": "#6ddd81",
+                        "on-primary-container": "#ffffff",
+                        "on-background": "#e3e2e2",
+                        "surface-container-lowest": "#0d0e0f",
+                        "on-primary": "#002e68",
+                        "tertiary-fixed-dim": "#fbbc05",
+                        "surface-container-high": "#292a2a",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#1a73e8",
+                        "inverse-surface": "#e3e2e2",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#005320",
+                        "background": "#121414",
+                        "tertiary-container": "#987000",
+                        "primary": "#adc7ff",
+                        "secondary-fixed": "#89fa9b",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-fixed": "#001a41",
+                        "surface-variant": "#343535",
+                        "on-surface": "#e3e2e2",
+                        "tertiary": "#fbbc05",
+                        "surface-container-highest": "#343535",
+                        "secondary-container": "#30a550",
+                        "on-secondary-container": "#003210",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-secondary-fixed": "#002108",
+                        "inverse-on-surface": "#2f3131",
+                        "inverse-primary": "#005bc0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "sidebar_width": "260px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "sidebar_collapsed": "64px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "body": ["Inter"],
+                        "h4": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "label-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #121414; color: #e3e2e2; }
+        .glass-bg {
+            background: rgba(30, 32, 32, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 144, 159, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1a1c1c; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #414754; border-radius: 2px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="font-body text-body p-xl overflow-x-hidden">
+<!-- Global Background Animation -->
+<div class="fixed inset-0 -z-10 opacity-30">
+
+</div>
+<!-- Main Navigation (Suppressed for transactional focus, but using Sidebar logic for layout context) -->
+<div class="flex flex-wrap gap-xl justify-center items-start">
+<!-- 1. New Project Modal -->
+<div class="glass-bg w-[480px] rounded-lg shadow-2xl flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-h3 text-h3 text-on-surface">New Project</h3>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-lg space-y-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Project Name</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary focus:ring-0 text-on-surface transition-all" placeholder="e.g. Western Ridge Survey 2024" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Description</label>
+<textarea class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary focus:ring-0 text-on-surface transition-all" placeholder="Geophysical assessment for lithium potential..." rows="2"></textarea>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Default CRS</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary focus:ring-0 text-on-surface appearance-none">
+<option>WGS 84 / UTM zone 32N</option>
+<option>EPSG:3857</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Client</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary focus:ring-0 text-on-surface" placeholder="Global Mining Corp" type="text"/>
+</div>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-outline-variant flex justify-end gap-sm rounded-b-lg">
+<button class="px-md py-sm text-on-surface-variant hover:text-on-surface font-h4 text-h4 transition-all">Cancel</button>
+<button class="px-md py-sm bg-primary-container text-on-primary-container font-h4 text-h4 rounded hover:bg-opacity-90 active:scale-95 transition-all">Create Project</button>
+</div>
+</div>
+<!-- 2. New Survey Modal -->
+<div class="glass-bg w-[520px] rounded-lg shadow-2xl flex flex-col">
+<div class="p-md border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">add_location_alt</span>
+<h3 class="font-h3 text-h3 text-on-surface">New Survey</h3>
+</div>
+<div class="p-lg space-y-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Survey Name</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary text-on-surface" type="text" value="Line_B_Resistivity_v01"/>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Method</label>
+<div class="relative group">
+<div class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface">Resistivity (ERT)</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Sub-method</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm focus:border-primary text-on-surface">
+<option>Time-Domain IP</option>
+<option>Spectral IP</option>
+</select>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Array Type</label>
+<div class="grid grid-cols-3 gap-xs">
+<button class="bg-surface-container-highest border-primary border p-sm text-center rounded flex flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-primary">linear_scale</span>
+<span class="font-label-mono text-label-mono">Schlumberger</span>
+</button>
+<button class="bg-surface-container border-outline-variant border p-sm text-center rounded flex flex-col items-center gap-xs hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">join_full</span>
+<span class="font-label-mono text-label-mono">Wenner</span>
+</button>
+<button class="bg-surface-container border-outline-variant border p-sm text-center rounded flex flex-col items-center gap-xs hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">multiple_stop</span>
+<span class="font-label-mono text-label-mono">Dipole-Dipole</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant flex justify-end gap-sm">
+<button class="px-md py-sm text-on-surface-variant font-h4 text-h4">Cancel</button>
+<button class="px-lg py-sm bg-primary-container text-on-primary-container font-h4 text-h4 rounded">Create Survey</button>
+</div>
+</div>
+<!-- 3. Upload Data Modal -->
+<div class="glass-bg w-[560px] rounded-lg shadow-2xl flex flex-col">
+<div class="p-md border-b border-outline-variant">
+<h3 class="font-h3 text-h3 text-on-surface">Upload Survey Data</h3>
+</div>
+<div class="p-lg space-y-lg">
+<!-- Dropzone Area (Simulated After State) -->
+<div class="bg-surface-container border-2 border-dashed border-primary/40 rounded-xl p-lg flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<p class="font-h4 text-h4 text-on-surface">SURVEY_W_RIDGE_004.csv</p>
+<p class="font-caption text-caption text-on-surface-variant">1.4 MB • Upload Complete</p>
+</div>
+<!-- Auto-detect Banner -->
+<div class="bg-secondary/10 border border-secondary/30 rounded px-md py-sm flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<p class="text-on-surface font-body">Format Detected: <span class="font-bold">Resistivity Schlumberger</span></p>
+</div>
+<p class="font-label-mono text-label-mono bg-secondary/20 px-xs rounded text-secondary">47 STATIONS</p>
+</div>
+<!-- Preview Table -->
+<div class="space-y-xs">
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Data Preview (First 5 Rows)</p>
+<div class="overflow-hidden border border-outline-variant rounded">
+<table class="w-full text-left font-data-mono text-data-mono">
+<thead class="bg-surface-container-high border-b border-outline-variant">
+<tr>
+<th class="px-sm py-xs text-on-surface-variant">Station</th>
+<th class="px-sm py-xs text-on-surface-variant">Spacing(m)</th>
+<th class="px-sm py-xs text-on-surface-variant">V(mV)</th>
+<th class="px-sm py-xs text-on-surface-variant">I(mA)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<tr class="bg-surface">
+<td class="px-sm py-xs">S-001</td>
+<td class="px-sm py-xs">1.5</td>
+<td class="px-sm py-xs">142.4</td>
+<td class="px-sm py-xs">50.0</td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="px-sm py-xs">S-002</td>
+<td class="px-sm py-xs">3.0</td>
+<td class="px-sm py-xs">88.1</td>
+<td class="px-sm py-xs">50.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant flex justify-end gap-sm">
+<button class="px-md py-sm text-on-surface-variant font-h4 text-h4">Back</button>
+<button class="px-lg py-sm bg-primary-container text-on-primary-container font-h4 text-h4 rounded">Process Data</button>
+</div>
+</div>
+<!-- 4. Add Reading Modal -->
+<div class="glass-bg w-[480px] rounded-lg shadow-2xl flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-h3 text-h3 text-on-surface">Add Reading</h3>
+<div class="flex bg-surface-container p-xs rounded border border-outline-variant">
+<button class="px-sm py-xs bg-primary-container text-on-primary-container rounded text-caption font-medium">Manual</button>
+<button class="px-sm py-xs text-on-surface-variant text-caption font-medium">Map Click</button>
+</div>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex items-center gap-md">
+<div class="flex-1 space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase">Station ID</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm font-data-mono" type="text" value="ST-048"/>
+</div>
+<div class="flex-1 space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase">Time</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded px-md py-sm font-data-mono text-on-surface-variant" readonly="" type="text" value="14:22:15"/>
+</div>
+</div>
+<div class="bg-surface-container/50 border border-outline-variant p-md rounded-xl space-y-md">
+<p class="font-caption text-caption text-primary font-bold uppercase">Resistivity Spacing (m)</p>
+<div class="grid grid-cols-3 gap-sm">
+<div class="space-y-xs">
+<label class="text-[10px] text-on-surface-variant uppercase">A-M</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-sm py-xs font-data-mono text-center" type="number" value="2.5"/>
+</div>
+<div class="space-y-xs">
+<label class="text-[10px] text-on-surface-variant uppercase">M-N</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-sm py-xs font-data-mono text-center" type="number" value="1.0"/>
+</div>
+<div class="space-y-xs">
+<label class="text-[10px] text-on-surface-variant uppercase">A-B</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-sm py-xs font-data-mono text-center" type="number" value="12.0"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase">Voltage (mV)</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm font-data-mono" placeholder="0.00" type="number"/>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant uppercase">Current (mA)</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded px-md py-sm font-data-mono" placeholder="50.0" type="number"/>
+</div>
+</div>
+<div class="bg-primary/5 border border-primary/20 p-md rounded flex justify-between items-center">
+<p class="text-on-surface font-body">Apparent Resistivity</p>
+<div class="text-right">
+<p class="font-h2 text-h2 text-primary font-bold">124.8 <span class="text-caption font-normal">Ωm</span></p>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant flex gap-sm">
+<button class="flex-1 px-md py-sm border border-outline-variant text-on-surface rounded font-h4">Clear</button>
+<button class="flex-[2] px-md py-sm bg-primary-container text-on-primary-container rounded font-h4">Add Station reading</button>
+</div>
+</div>
+<!-- 5. Anomaly Detail Modal -->
+<div class="glass-bg w-[600px] rounded-lg shadow-2xl flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-high/50">
+<div class="flex items-center gap-sm">
+<span class="font-h3 text-h3 font-bold text-on-surface">ANOMALY-442</span>
+<span class="px-xs py-0.5 rounded bg-error-container text-on-error-container text-[10px] font-bold uppercase tracking-widest">High Priority</span>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined">share</span></button>
+<button class="p-xs hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined">print</span></button>
+<button class="p-xs hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined">close</span></button>
+</div>
+</div>
+<div class="p-lg grid grid-cols-5 gap-lg">
+<!-- Properties Table (Left 2 cols) -->
+<div class="col-span-2 space-y-md">
+<h4 class="font-caption text-caption text-on-surface-variant uppercase font-bold">Properties</h4>
+<div class="space-y-sm">
+<div class="flex justify-between border-b border-outline-variant pb-xs">
+<span class="text-on-surface-variant text-caption">Depth (Est)</span>
+<span class="font-data-mono text-data-mono text-on-surface">42.5m</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-xs">
+<span class="text-on-surface-variant text-caption">Amplitude</span>
+<span class="font-data-mono text-data-mono text-error">12.4 nT</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-xs">
+<span class="text-on-surface-variant text-caption">Shape Factor</span>
+<span class="font-data-mono text-data-mono text-on-surface">0.88</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-xs">
+<span class="text-on-surface-variant text-caption">Confidence</span>
+<span class="font-data-mono text-data-mono text-secondary">94%</span>
+</div>
+</div>
+<div class="space-y-xs pt-sm">
+<h4 class="font-caption text-caption text-on-surface-variant uppercase font-bold">Mini Map</h4>
+<div class="h-32 rounded bg-surface border border-outline-variant relative overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="A dark-themed geological satellite map showing a specific survey line with a circular red heat zone representing a subsurface anomaly located in a desert environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlaL0luvf_b_h-k0kdJiDjoLWgHbZcLzJQ7aD1rp6FDiPoFeoWbDtLswv1ef8aEGQ1Eszp-nyRc5bY_ob3JtBMy6EQc6YP1qHOOjrY4RbU9xeGWUko8j-okF6a6jmvoerG_xRkDy3hiXXLUhQpG-bZyxFaACaPkc27wwGRrn1xWIAmFlbhci8PxGX4zpsCeE5X7mtNBtxo4y5o_BVtdbLOcOcUHMHBipZcMAN_Kl_v2zVeGfEhuc5BxE9WVaysmCU8nnIrh_Ggu_Ng"/>
+<div class="absolute inset-0 bg-primary/10 border-2 border-primary animate-pulse pointer-events-none"></div>
+</div>
+</div>
+</div>
+<!-- Visuals (Right 3 cols) -->
+<div class="col-span-3 space-y-lg">
+<div class="space-y-xs">
+<h4 class="font-caption text-caption text-on-surface-variant uppercase font-bold">Observed vs Calculated Profile</h4>
+<div class="h-40 bg-surface-container-lowest rounded-xl border border-outline-variant p-sm relative">
+<!-- Simulated Chart -->
+<div class="absolute inset-x-md top-1/2 h-0.5 bg-outline-variant"></div>
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 200 100">
+<path d="M0,50 Q40,10 80,60 T160,20 T200,50" fill="none" stroke="#adc7ff" stroke-width="2"></path>
+<path d="M0,52 Q40,12 80,62 T160,22 T200,52" fill="none" stroke="#fbbc05" stroke-dasharray="4" stroke-width="2"></path>
+</svg>
+<div class="absolute bottom-2 right-2 flex gap-sm bg-surface-container-highest/80 backdrop-blur px-xs rounded text-[9px]">
+<span class="flex items-center gap-xs"><i class="w-2 h-0.5 bg-primary"></i> Obs</span>
+<span class="flex items-center gap-xs"><i class="w-2 h-0.5 bg-tertiary border-dashed"></i> Calc</span>
+</div>
+</div>
+</div>
+<div class="space-y-xs">
+<h4 class="font-caption text-caption text-on-surface-variant uppercase font-bold">3D Inversion Volume</h4>
+<div class="h-40 rounded-xl bg-gradient-to-br from-surface-container-high to-surface-dim border border-outline-variant relative overflow-hidden">
+
+<div class="absolute top-2 right-2 flex flex-col gap-xs">
+<button class="w-6 h-6 bg-surface-container/80 rounded border border-outline-variant flex items-center justify-center"><span class="material-symbols-outlined text-sm">fullscreen</span></button>
+<button class="w-6 h-6 bg-surface-container/80 rounded border border-outline-variant flex items-center justify-center"><span class="material-symbols-outlined text-sm">refresh</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-outline-variant flex justify-between items-center rounded-b-lg">
+<p class="font-caption text-caption text-on-surface-variant">Last updated: 2 mins ago</p>
+<button class="px-md py-sm bg-primary text-on-primary rounded font-h4 hover:opacity-90 transition-opacity">Generate Full Report</button>
+</div>
+</div>
+</div>
+<!-- UI Interaction Script -->
+<script>
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('scale-95');
+                setTimeout(() => btn.classList.remove('scale-95'), 100);
+            });
+        });
+    </script>
+</body></html>

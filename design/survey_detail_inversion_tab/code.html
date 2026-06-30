@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro - Inversion Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#003914",
+                    "on-tertiary-fixed": "#261a00",
+                    "error": "#ffb4ab",
+                    "surface-container": "#1e2020",
+                    "on-surface-variant": "#c1c6d6",
+                    "error-container": "#93000a",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#004493",
+                    "surface-bright": "#38393a",
+                    "surface-tint": "#adc7ff",
+                    "outline": "#8b909f",
+                    "tertiary-fixed": "#ffdfa0",
+                    "surface-dim": "#121414",
+                    "surface-container-low": "#1a1c1c",
+                    "outline-variant": "#414754",
+                    "secondary": "#6ddd81",
+                    "on-tertiary": "#402d00",
+                    "surface": "#121414",
+                    "secondary-fixed-dim": "#6ddd81",
+                    "on-primary-container": "#ffffff",
+                    "on-background": "#e3e2e2",
+                    "surface-container-lowest": "#0d0e0f",
+                    "on-primary": "#002e68",
+                    "tertiary-fixed-dim": "#fbbc05",
+                    "surface-container-high": "#292a2a",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#1a73e8",
+                    "inverse-surface": "#e3e2e2",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "on-error": "#690005",
+                    "on-secondary-fixed-variant": "#005320",
+                    "background": "#121414",
+                    "tertiary-container": "#987000",
+                    "primary": "#adc7ff",
+                    "secondary-fixed": "#89fa9b",
+                    "primary-fixed": "#d8e2ff",
+                    "on-primary-fixed": "#001a41",
+                    "surface-variant": "#343535",
+                    "on-surface": "#e3e2e2",
+                    "tertiary": "#fbbc05",
+                    "surface-container-highest": "#343535",
+                    "secondary-container": "#30a550",
+                    "on-secondary-container": "#003210",
+                    "primary-fixed-dim": "#adc7ff",
+                    "on-secondary-fixed": "#002108",
+                    "inverse-on-surface": "#2f3131",
+                    "inverse-primary": "#005bc0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "sidebar_width": "260px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "sidebar_collapsed": "64px"
+            },
+            "fontFamily": {
+                    "caption": ["Inter"],
+                    "body": ["Inter"],
+                    "h4": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "label-mono": ["JetBrains Mono"],
+                    "h1": ["Inter"],
+                    "h3": ["Inter"],
+                    "h2": ["Inter"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                    "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #343535;
+        }
+        .glass-overlay {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #343535;
+            border-radius: 2px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #adc7ff;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 flex overflow-hidden h-screen">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-sidebar_width sticky left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md z-40 hidden md:flex">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="text-[10px] font-label-mono text-on-surface-variant tracking-wider uppercase opacity-60">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body text-body">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm rounded transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-lg h-16 bg-surface border-b border-outline-variant sticky top-0 z-30">
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span class="font-h4 text-h4 font-bold text-on-surface">GeoAnalysis Pro</span>
+</div>
+<div class="hidden lg:flex items-center gap-md">
+<span class="text-on-surface-variant">/</span>
+<a class="text-on-surface-variant font-body text-body hover:text-on-surface transition-colors" href="#">Project Alpha</a>
+<span class="text-on-surface-variant">/</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-xs cursor-default">Inversion Workspace</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-2">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-2">contrast</span>
+<div class="flex items-center gap-sm ml-sm pl-md border-l border-outline-variant cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a geophysicist in a high-tech lab setting, focused on multiple monitors showing seismic charts. The lighting is low and cool-toned, dominated by deep blues and greys, with a professional corporate modern aesthetic. The man is wearing a dark charcoal sweater, and his face is partially illuminated by the soft glow of data visualizations." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhauwARYva74r7G96MtlJsCP1xodySCZX1SClSsA_qLO6Ofeqi1I_SwJ3sAhcvbSqZxJnhW38Fd7RIC1KcyoM8DshzbeX0mB0NEHPvkOvXaxsuTxpxyhCcKD1SalVBjjoi6wxHUaQQJGeM-DRbW7iUSUH8iFV1umX5EzXnLb6wSsk2Fd7kpqZhHnrcb8Vt7xo5gn8h40sHpsjjEdZzZY22CejmtLUFv7TmpthtrzlQ6dHES_NjpHnOS5O_4NmhfVVzQ-FYrVEyZqTt"/>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Workspace Container (Two Panels) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Inversion Parameters -->
+<aside class="w-[350px] bg-surface-container-low border-r border-outline-variant flex flex-col h-full custom-scrollbar overflow-y-auto">
+<div class="p-md border-b border-outline-variant bg-surface-container">
+<h2 class="font-h4 text-h4 text-on-surface">Inversion Parameters</h2>
+</div>
+<div class="p-md space-y-lg">
+<!-- Type Selector -->
+<div class="space-y-sm">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Analysis Type</span>
+<div class="flex p-xs bg-surface-container-highest rounded-lg">
+<button class="flex-1 py-1.5 text-body font-medium rounded bg-primary-container text-white shadow-sm transition-all">1D</button>
+<button class="flex-1 py-1.5 text-body font-medium text-on-surface-variant hover:text-on-surface transition-colors">2D</button>
+<button class="flex-1 py-1.5 text-body font-medium text-on-surface-variant hover:text-on-surface transition-colors">3D</button>
+</div>
+</div>
+<!-- Numerical Inputs -->
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Number of Layers</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded px-md py-sm font-data-mono text-data-mono text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="number" value="8"/>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-caption text-caption text-on-surface-variant">Regularization Strength (λ)</label>
+<span class="font-data-mono text-data-mono text-primary">1.0</span>
+</div>
+<input class="w-full h-1 my-sm" max="100" min="0.01" step="0.01" type="range" value="1.0"/>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Starting Model</label>
+<select class="w-full bg-surface-container-highest border border-outline-variant rounded px-md py-sm font-body text-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none">
+<option>Uniform</option>
+<option>Gradient</option>
+<option>From File...</option>
+</select>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-caption text-caption text-on-surface-variant">Data Error (%)</label>
+<input class="w-16 bg-transparent border-none text-right font-data-mono text-data-mono text-primary focus:ring-0" type="number" value="5"/>
+</div>
+<input class="w-full h-1 my-sm" max="20" min="1" step="1" type="range" value="5"/>
+</div>
+</div>
+<!-- Presets -->
+<div class="space-y-sm">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Presets</span>
+<div class="grid grid-cols-3 gap-sm">
+<button class="py-1 px-2 border border-outline-variant rounded text-[11px] font-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors">QUICK</button>
+<button class="py-1 px-2 border border-outline-variant rounded text-[11px] font-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors">DETAILED</button>
+<button class="py-1 px-2 border border-outline-variant rounded text-[11px] font-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors">HIGH RES</button>
+</div>
+</div>
+<!-- Collapsible Advanced -->
+<details class="group">
+<summary class="flex items-center justify-between cursor-pointer list-none text-on-surface-variant hover:text-on-surface py-sm">
+<span class="font-caption text-caption font-semibold">ADVANCED OPTIONS</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="pt-md space-y-md border-t border-outline-variant mt-sm">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Max Iterations</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded px-md py-sm font-data-mono text-data-mono text-on-surface" type="number" value="50"/>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Tolerance</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded px-md py-sm font-data-mono text-data-mono text-on-surface" step="0.001" type="number" value="0.01"/>
+</div>
+</div>
+</details>
+</div>
+<div class="mt-auto p-md border-t border-outline-variant bg-surface-container-low">
+<button class="w-full bg-primary-container hover:bg-blue-600 text-white py-lg rounded font-h4 text-h4 font-bold transition-all active:scale-[0.98] flex items-center justify-center gap-md">
+<span class="material-symbols-outlined">play_arrow</span>
+                        RUN INVERSION
+                    </button>
+</div>
+</aside>
+<!-- Right Panel: Results -->
+<section class="flex-1 flex flex-col bg-surface overflow-hidden">
+<!-- Results Tabs -->
+<nav class="flex items-center px-lg border-b border-outline-variant h-12 gap-lg shrink-0">
+<button class="text-primary font-bold border-b-2 border-primary h-full px-xs flex items-center gap-sm">
+<span class="material-symbols-outlined text-sm">grid_on</span>
+                        Cross-Section
+                    </button>
+<button class="text-on-surface-variant hover:text-on-surface h-full px-xs flex items-center gap-sm transition-colors">
+<span class="material-symbols-outlined text-sm">show_chart</span>
+                        Convergence
+                    </button>
+<button class="text-on-surface-variant hover:text-on-surface h-full px-xs flex items-center gap-sm transition-colors">
+<span class="material-symbols-outlined text-sm">table_chart</span>
+                        Model Data
+                    </button>
+</nav>
+<!-- Visualization Canvas -->
+<div class="flex-1 relative p-lg flex flex-col min-h-0">
+<div class="flex justify-between items-center mb-md">
+<div class="flex items-center gap-md">
+<h3 class="font-h3 text-h3 text-on-surface">Resistivity Inversion Model</h3>
+<span class="px-md py-0.5 bg-secondary-container/20 text-secondary text-[11px] font-label-mono rounded border border-secondary/30">CONVERGED</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined">zoom_out</span>
+</button>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-sm"></div>
+<button class="flex items-center gap-sm px-md py-1.5 border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-all text-body font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                Export Model
+                            </button>
+</div>
+</div>
+<!-- Main Plot Area -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant relative overflow-hidden flex flex-col group">
+<!-- Heatmap Visualization (Abstracted as Image Placeholder) -->
+<div class="flex-1 w-full relative">
+<div class="absolute inset-0 opacity-80" data-alt="A scientific visualization of a 2D geophysical inversion cross-section. The plot uses a red-yellow-blue colormap representing subsurface resistivity. Horizontal axis shows distance in meters from 0 to 500, and vertical axis shows depth from 0 to 100 meters. The data displays smooth geological layers with several distinct high-resistivity anomalies in bright red against a cool blue background. The style is precise, technical, and clean, similar to professional academic data visualization software." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvjL_ouaoQjaCPBC3Fgq4smTNszDqW5zjsgItcaNgzO6l_ojq4Ps4QZQT6RUXOk59I1tfSsGyM4E611uAoxSoSITmDb87Ra6gJ9LvJXe2h2zInWbXDJ97NQS8YQnZ7PJGiuAN_-CMAROBcRk_mh59Zy8p76Y3ng-N_s7TPcZxHQznVKcq1Q97owDf-jVSVXdTfqDSxw4Du4YvYV2JNgNCdLCkso2dqKF6Tab1QTXKOKco42iYZQVKGPLKmKoXVE_lFerSA3RhA0pqT')"></div>
+<!-- Legend Floating -->
+<div class="absolute bottom-md right-md glass-overlay p-md rounded-lg border border-outline-variant shadow-xl">
+<p class="text-[10px] font-label-mono text-on-surface-variant mb-sm uppercase">Resistivity (Ω·m)</p>
+<div class="w-48 h-3 bg-gradient-to-r from-blue-600 via-yellow-400 to-red-600 rounded-sm mb-xs"></div>
+<div class="flex justify-between font-data-mono text-[10px] text-on-surface-variant">
+<span>10</span>
+<span>100</span>
+<span>1000</span>
+<span>10k</span>
+</div>
+</div>
+<!-- Coordinate Readout -->
+<div class="absolute top-md left-md glass-overlay px-md py-sm rounded-lg border border-outline-variant font-data-mono text-[11px] text-primary flex items-center gap-md">
+<span>X: 245.5m</span>
+<span class="w-px h-3 bg-outline-variant"></span>
+<span>Z: -32.1m</span>
+<span class="w-px h-3 bg-outline-variant"></span>
+<span>ρ: 452.8 Ω·m</span>
+</div>
+</div>
+<!-- Axis Labels -->
+<div class="h-10 border-t border-outline-variant flex items-center justify-between px-xl bg-surface-container-low font-data-mono text-[10px] text-on-surface-variant">
+<span>0m</span>
+<span>100m</span>
+<span>200m</span>
+<span>300m</span>
+<span>400m</span>
+<span>500m</span>
+</div>
+</div>
+<!-- Status Info Bar -->
+<div class="mt-md flex justify-between items-center">
+<div class="flex items-center gap-xl">
+<div class="flex flex-col">
+<span class="text-[10px] font-label-mono text-on-surface-variant uppercase">RMS Error</span>
+<span class="font-data-mono text-data-mono text-secondary">2.14%</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label-mono text-on-surface-variant uppercase">Iterations</span>
+<span class="font-data-mono text-data-mono text-on-surface">12 / 50</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label-mono text-on-surface-variant uppercase">Time elapsed</span>
+<span class="font-data-mono text-data-mono text-on-surface">0.45s</span>
+</div>
+</div>
+<button class="flex items-center gap-sm px-md py-1.5 bg-surface-container-highest hover:bg-surface-variant rounded-lg border border-outline-variant transition-all text-body font-medium">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+                            Re-run
+                        </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Button for Global Quick Actions -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Micro-interactions for sliders
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', (e) => {
+                const valueDisplay = e.target.parentElement.querySelector('.text-primary');
+                if (valueDisplay && valueDisplay.tagName !== 'INPUT') {
+                    valueDisplay.innerText = e.target.value;
+                }
+            });
+        });
+
+        // Toggle animation for the Run button
+        const runBtn = document.querySelector('button:contains("RUN INVERSION")') || document.querySelector('.bg-primary-container');
+        if(runBtn) {
+            runBtn.addEventListener('click', function() {
+                this.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> PROCESSING...';
+                this.classList.add('opacity-80');
+                setTimeout(() => {
+                    this.innerHTML = '<span class="material-symbols-outlined">play_arrow</span> RUN INVERSION';
+                    this.classList.remove('opacity-80');
+                }, 2000);
+            });
+        }
+    </script>
+</body></html>

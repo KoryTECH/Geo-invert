@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoAnalysis Pro - Data Processing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .step-active {
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343535;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#003914",
+                        "on-tertiary-fixed": "#261a00",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1e2020",
+                        "on-surface-variant": "#c1c6d6",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#ffffff",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-bright": "#38393a",
+                        "surface-tint": "#adc7ff",
+                        "outline": "#8b909f",
+                        "tertiary-fixed": "#ffdfa0",
+                        "surface-dim": "#121414",
+                        "surface-container-low": "#1a1c1c",
+                        "outline-variant": "#414754",
+                        "secondary": "#6ddd81",
+                        "on-tertiary": "#402d00",
+                        "surface": "#121414",
+                        "secondary-fixed-dim": "#6ddd81",
+                        "on-primary-container": "#ffffff",
+                        "on-background": "#e3e2e2",
+                        "surface-container-lowest": "#0d0e0f",
+                        "on-primary": "#002e68",
+                        "tertiary-fixed-dim": "#fbbc05",
+                        "surface-container-high": "#292a2a",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#1a73e8",
+                        "inverse-surface": "#e3e2e2",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#005320",
+                        "background": "#121414",
+                        "tertiary-container": "#987000",
+                        "primary": "#adc7ff",
+                        "secondary-fixed": "#89fa9b",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-fixed": "#001a41",
+                        "surface-variant": "#343535",
+                        "on-surface": "#e3e2e2",
+                        "tertiary": "#fbbc05",
+                        "surface-container-highest": "#343535",
+                        "secondary-container": "#30a550",
+                        "on-secondary-container": "#003210",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-secondary-fixed": "#002108",
+                        "inverse-on-surface": "#2f3131",
+                        "inverse-primary": "#005bc0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "sidebar_width": "260px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "sidebar_collapsed": "64px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "body": ["Inter"],
+                        "h4": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "label-mono": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h4": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "label-mono": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h1": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "h3": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "h2": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low border-r border-outline-variant h-screen w-sidebar_width sticky left-0 top-0 flex flex-col py-md shrink-0">
+<div class="px-md mb-xl">
+<h1 class="font-h3 text-h3 font-bold text-primary">GeoAnalysis Pro</h1>
+<p class="font-caption text-caption text-on-surface-variant opacity-70">v4.2.0-alpha</p>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-md bg-surface-container-highest text-primary border-l-4 border-primary px-md py-sm" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared" style="font-variation-settings: 'FILL' 1;">folder_shared</span>
+<span class="font-body text-body font-semibold">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-body text-body">Surveys</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span class="font-body text-body">Data Entry</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body text-body">Reports</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md pt-md border-t border-outline-variant/30">
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high px-md py-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body text-body">Support</span>
+</a>
+<div class="mt-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional circular avatar of a geophysicist wearing technical outdoor gear in a high-contrast dark-mode photography style. The lighting is moody with subtle blue rim lighting, fitting the corporate modern aesthetic of the application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5yNr32XyHNz3-_B2lVlzRnOXNxJ0W3BYdKd4WKEs3J89FiAk345XP3RNpvN8X71wFDW3fGyh6xhEZcZWmlUai8rJHRPMD3J7itiv9p4YQijFuT146lVyF-9vBpuJj8cko-54uReRRJ6k_bINClhXIekGHbFwysoDPr9gXl5Lauti1whpQS7jSoDvgZPdDSH03BjU5HIkQyjhO7EMynCBEuI-VOO7IXxTxlscYsIsbimyS7OQaKmrAUM3q_4s2Zgp1TQPLnMzdLPi2"/>
+</div>
+<div>
+<p class="font-label-mono text-label-mono text-on-surface">DR. SARAH CHEN</p>
+<p class="font-caption text-[10px] text-on-surface-variant uppercase tracking-wider">Lead Analyst</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50 shrink-0">
+<div class="flex items-center gap-lg">
+<span class="font-h4 text-h4 font-bold text-on-surface">Survey_Alpha_G3</span>
+<div class="flex items-center gap-md">
+<span class="text-primary font-bold border-b-2 border-primary pb-xs cursor-pointer">Processing</span>
+<span class="text-on-surface-variant font-body text-body hover:text-on-surface cursor-pointer">Quality Control</span>
+<span class="text-on-surface-variant font-body text-body hover:text-on-surface cursor-pointer">Raw Data</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" data-icon="search">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg pl-xl pr-md py-1.5 text-body font-body focus:outline-none focus:border-primary w-64" placeholder="Search data points..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="contrast">contrast</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="account_circle">account_circle</button>
+</div>
+</header>
+<!-- Processing Content Canvas -->
+<div class="flex-1 flex min-h-0 bg-background overflow-hidden p-md gap-md">
+<!-- Left Step Wizard Panel -->
+<section class="w-[380px] flex flex-col gap-md overflow-y-auto pr-sm">
+<!-- Step 1: Corrections -->
+<div class="bg-surface-container rounded-lg border border-outline-variant p-md flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-[12px] font-bold text-on-secondary">
+<span class="material-symbols-outlined text-[16px]" data-icon="check">check</span>
+</span>
+<h3 class="font-h4 text-h4">1. Corrections</h3>
+</div>
+<span class="font-label-mono text-label-mono text-secondary px-2 py-0.5 rounded bg-secondary/10 border border-secondary/20">APPLIED</span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<button class="flex items-center gap-xs px-sm py-1.5 rounded-lg border border-secondary bg-secondary/10 text-secondary transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="terrain" style="font-variation-settings: 'FILL' 1;">terrain</span>
+<span class="font-caption text-caption">Topography</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-1.5 rounded-lg border border-secondary bg-secondary/10 text-secondary transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="shutter_speed">shutter_speed</span>
+<span class="font-caption text-caption">Instrument Drift</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-1.5 rounded-lg border border-outline-variant hover:border-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="public">public</span>
+<span class="font-caption text-caption">IGRF Model</span>
+</button>
+<button class="flex items-center gap-xs px-sm py-1.5 rounded-lg border border-secondary bg-secondary/10 text-secondary transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-caption text-caption">Diurnal</span>
+</button>
+</div>
+</div>
+<!-- Step 2: Compute Apparent Values (ACTIVE) -->
+<div class="bg-surface-container rounded-lg border border-primary step-active p-md flex flex-col gap-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-primary"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-[12px] font-bold text-white">2</span>
+<h3 class="font-h4 text-h4">2. Compute Apparent</h3>
+</div>
+<span class="font-label-mono text-label-mono text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">ACTIVE</span>
+</div>
+<div class="space-y-sm">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Method</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded px-sm py-1.5 text-body focus:border-primary outline-none appearance-none">
+<option>Resistivity — Wenner array</option>
+<option>Induced Polarization</option>
+<option>Schlumberger array</option>
+</select>
+</div>
+<div class="h-24 bg-surface-container-lowest rounded border border-outline-variant flex items-center justify-center relative overflow-hidden">
+<!-- Sparkline-style chart placeholder -->
+<div class="absolute inset-0 opacity-40 pointer-events-none">
+<svg class="w-full h-full stroke-primary stroke-2 fill-none" viewbox="0 0 400 100">
+<path d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,10"></path>
+</svg>
+</div>
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase bg-surface-container-lowest px-2">Preview: Apparent Rho</span>
+</div>
+<button class="w-full bg-primary-container hover:bg-primary-container/80 text-white font-semibold py-2 rounded-lg text-body transition-transform active:scale-95">
+                                Compute Values
+                            </button>
+</div>
+</div>
+<!-- Step 3: Generate Pseudo-Section -->
+<div class="bg-surface-container rounded-lg border border-outline-variant p-md flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="w-6 h-6 rounded-full bg-surface-variant border border-outline-variant flex items-center justify-center text-[12px] font-bold text-on-surface-variant">3</span>
+<h3 class="font-h4 text-h4 text-on-surface-variant">3. Pseudo-Section</h3>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant px-2 py-0.5 rounded bg-surface-variant/20 border border-outline-variant">PENDING</span>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Grid Size (m)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-sm py-1.5 font-data-mono text-data-mono focus:border-primary outline-none" type="text" value="0.5"/>
+</div>
+<div class="space-y-xs">
+<label class="font-caption text-caption text-on-surface-variant">Smoothing</label>
+<input class="w-full accent-primary mt-2" type="range"/>
+</div>
+</div>
+</div>
+<!-- Step 4: Filtering -->
+<div class="bg-surface-container rounded-lg border border-outline-variant p-md flex flex-col gap-md opacity-60">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="w-6 h-6 rounded-full bg-surface-variant border border-outline-variant flex items-center justify-center text-[12px] font-bold text-on-surface-variant">4</span>
+<h3 class="font-h4 text-h4 text-on-surface-variant">4. Filtering</h3>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-xs border border-outline-variant rounded bg-surface-container-low">
+<span class="font-body text-body text-on-surface-variant px-sm">Low-pass Filter</span>
+<div class="w-10 h-5 bg-outline-variant rounded-full relative">
+<div class="absolute left-1 top-1 w-3 h-3 bg-surface rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Live Preview Panel -->
+<section class="flex-1 bg-surface-container rounded-xl border border-outline-variant relative overflow-hidden flex flex-col">
+<!-- Glassmorphic Toolbar -->
+<div class="absolute top-md left-1/2 -translate-x-1/2 z-20 glass-panel px-md py-sm rounded-full flex items-center gap-lg">
+<div class="flex items-center gap-md border-r border-outline-variant pr-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-highest p-1 rounded" data-icon="zoom_in">zoom_in</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest p-1 rounded" data-icon="zoom_out">zoom_out</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest p-1 rounded" data-icon="restart_alt">restart_alt</button>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container-highest p-1 rounded" data-icon="layers" style="font-variation-settings: 'FILL' 1;">layers</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest p-1 rounded" data-icon="palette">palette</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-highest p-1 rounded" data-icon="download">download</button>
+</div>
+</div>
+<!-- Visual Canvas -->
+<div class="flex-1 relative bg-[#0d0e0f] flex flex-col items-center justify-center p-xl">
+<!-- Simulated 2D Pseudo-section Grid -->
+<div class="w-full max-w-4xl aspect-[21/9] bg-surface-container-low border border-outline-variant rounded relative flex flex-col">
+<div class="p-sm border-b border-outline-variant flex justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Profile A-A' | Wenner Configuration</span>
+<span class="font-data-mono text-data-mono text-secondary">152 Data Points Validated</span>
+</div>
+<div class="flex-1 grid grid-cols-24 grid-rows-10 gap-[1px] p-base bg-outline-variant/10">
+<!-- Pseudo-section dynamic cells (simulation) -->
+<script>
+                                    const grid = document.currentScript.parentElement;
+                                    const colors = ['#001a41', '#004493', '#1a73e8', '#adc7ff', '#fbbc05', '#987000', '#5c4300'];
+                                    for(let i=0; i < 240; i++) {
+                                        const div = document.createElement('div');
+                                        div.className = 'w-full h-full transition-opacity hover:opacity-50 cursor-crosshair';
+                                        div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                                        grid.appendChild(div);
+                                    }
+                                </script>
+</div>
+<!-- Axis labels -->
+<div class="flex justify-between px-md py-xs font-data-mono text-[10px] text-on-surface-variant border-t border-outline-variant">
+<span>0m</span>
+<span>250m</span>
+<span>500m</span>
+<span>750m</span>
+<span>1000m</span>
+</div>
+</div>
+<!-- Mini Floating Data Card -->
+<div class="absolute bottom-md right-md glass-panel p-md rounded-lg w-64 space-y-sm">
+<div class="flex justify-between">
+<span class="font-caption text-caption text-on-surface-variant">Current Point</span>
+<span class="font-data-mono text-data-mono text-primary">ID: 842</span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-low p-xs rounded">
+<p class="font-label-mono text-[9px] text-on-surface-variant">RESISTIVITY</p>
+<p class="font-data-mono text-body text-secondary">428.5 Ωm</p>
+</div>
+<div class="bg-surface-container-low p-xs rounded">
+<p class="font-label-mono text-[9px] text-on-surface-variant">DEPTH</p>
+<p class="font-data-mono text-body text-on-surface">12.4 m</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Global Action Bar -->
+<footer class="h-16 bg-surface-container-low border-t border-outline-variant flex items-center px-lg gap-lg shrink-0">
+<div class="flex-1 flex flex-col gap-xs">
+<div class="flex justify-between items-center px-xs">
+<span class="font-label-mono text-label-mono text-on-surface-variant">PROCESSING WORKFLOW PROGRESS</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">25% Complete</span>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-1/4 bg-primary-container" style="transition: width 1s ease-in-out"></div>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-lg py-2 border border-outline-variant hover:bg-surface-container-high rounded text-body font-semibold transition-colors">
+                        Reset Workflow
+                    </button>
+<!-- Button disabled style as requested -->
+<button class="px-xl py-2 bg-primary-container/40 text-white/50 cursor-not-allowed rounded text-body font-bold flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_arrow">play_arrow</span>
+                        Run Full Processing
+                    </button>
+</div>
+</footer>
+</main>
+</div>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 pointer-events-none opacity-20 z-[-1]">
+
+</div>
+<script>
+        // Micro-interactions for chips
+        document.querySelectorAll('button.border-secondary').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isApplied = btn.classList.contains('bg-secondary/10');
+                if(isApplied) {
+                    btn.classList.remove('bg-secondary/10', 'text-secondary', 'border-secondary');
+                    btn.classList.add('border-outline-variant', 'text-on-surface-variant');
+                } else {
+                    btn.classList.add('bg-secondary/10', 'text-secondary', 'border-secondary');
+                    btn.classList.remove('border-outline-variant', 'text-on-surface-variant');
+                }
+            });
+        });
+    </script>
+</body></html>
