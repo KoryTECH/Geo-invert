@@ -1,53 +1,43 @@
 {
-      "name": "Geo-Calc Dev Environment",
+  "name": "Geo-Invert Dev Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-        // Base image: Ubuntu, good general-purpose starting point
-          "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true
+    }
+  },
 
-            "features": {
-                // C++ toolchain: gcc/g++, cmake, build tools
-                    "ghcr.io/devcontainers/features/common-utils:2": {},
-                        "ghcr.io/devcontainers/features/python:1": {
-                              "version": "3.11"
-                                  },
-                                      "ghcr.io/devcontainers/features/node:1": {
-                                            "version": "lts"
-                                                },
-                                                    // Docker-in-Docker so docker-compose (Postgres/Redis/MinIO) works inside the Codespace
-                                                        "ghcr.io/devcontainers/features/docker-in-docker:2": {
-                                                              "moby": true
-                                                                  }
-                                                                    },
+  "forwardPorts": [3000, 8080, 8000, 5432, 6379, 9000],
+  "portsAttributes": {
+    "3000": { "label": "React Frontend" },
+    "8080": { "label": "C++ Backend (Crow)" },
+    "8000": { "label": "Python Inversion Microservice" },
+    "5432": { "label": "PostgreSQL" },
+    "6379": { "label": "Redis" },
+    "9000": { "label": "MinIO" }
+  },
 
-                                                                      // Forward ports for backend, frontend, and Python microservice
-                                                                        "forwardPorts": [3000, 8080, 8000, 5432, 6379, 9000],
-                                                                          "portsAttributes": {I'm
-                                                                              "3000": { "label": "React Frontend" },
-                                                                                  "8080": { "label": "C++ Backend (Crow)" },
-                                                                                      "8000": { "label": "Python Inversion Microservice" },
-                                                                                          "5432": { "label": "PostgreSQL" },
-                                                                                              "6379": { "label": "Redis" },
-                                                                                                  "9000": { "label": "MinIO" }
-                                                                                                    },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
 
-                                                                                                      // Runs once when the Codespace is first created
-                                                                                                        "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
 
-                                                                                                          "customizations": {
-                                                                                                              "vscode": {
-                                                                                                                    "extensions": [
-                                                                                                                            "ms-vscode.cpptools",
-                                                                                                                                    "ms-vscode.cmake-tools",
-                                                                                                                                            "ms-python.python",
-                                                                                                                                                    "dbaeumer.vscode-eslint",
-                                                                                                                                                            "esbenp.prettier-vscode"
-                                                                                                                                                                  ]
-                                                                                                                                                                      }
-                                                                                                                                                                        },
-
-                                                                                                                                                                          // Keeps your free core-hours usage efficient: stop manually when done,
-                                                                                                                                                                            // but this ensures idle shutdown isn't endlessly delayed
-                                                                                                                                                                              "shutdownAction": "stopCompose"
-                                                                                                                                                                              }
-
+  "shutdownAction": "stopCompose"
 }
