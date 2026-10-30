@@ -7,6 +7,7 @@ set(CMAKE_TOOLCHAIN_FILE "/workspaces/Geo-invert/vcpkg/scripts/buildsystems/vcpk
     CACHE STRING "Vcpkg toolchain file")
 
 find_package(Crow CONFIG REQUIRED)
+find_package(httplib CONFIG REQUIRED)
 
-add_executable(backend src/main.cpp)
-target_link_libraries(backend PRIVATE Crow::Crow)
+add_executable(backend src/main.cpp src/inversion_client.cpp)
+target_link_libraries(backend PRIVATE Crow::Crow httplib::httplib)
