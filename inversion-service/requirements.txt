@@ -1,4 +1,5 @@
 fastapi
 uvicorn
 numpy
-pygimli
+pygimli==1.6.1
+pgcore==1.6.0
