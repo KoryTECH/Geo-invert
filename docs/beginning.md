@@ -795,3 +795,44 @@ WS     /ws/surveys/:id/progress       # Real-time job progress
 | PDF report difficult in C++ | Low | pdf-writer for simple; client-side pdfmake for complex |
 | Windows dev environment | Medium | CMake + vcpkg for C++; WSL2 alternative |
 | No geophysics collaborators | Medium | Document formulas; consult textbooks/SimPEG docs |
+
+---
+
+## Current Status and Decisions (updated 2026-11-03)
+
+This section supersedes anything above that contradicts it.
+
+### Decisions
+- Frontend: React + Vite in plain JavaScript. TypeScript was rejected.
+- Object storage: SeaweedFS (S3 API on port 9000). MinIO's community edition was discontinued and its images removed. Storage is accessed only through the S3 API, so it can be swapped by configuration.
+- Dev environment: GitHub Codespaces on Ubuntu 24.04, Python 3.11. Alpine was abandoned because pyGIMLi's compiled core (pgcore) has no musl wheels.
+- pyGIMLi 1.6.1 and pgcore 1.6.0 are pinned in inversion-service/requirements.txt.
+- The Python inversion service runs as a Docker container (infra/docker-compose.yml). The C++ backend reaches it at 127.0.0.1:8000 (INVERSION_HOST / INVERSION_PORT).
+- Scope: ERT/IP only until validated by FUTA lecturers. No custom inversion math; AI-written logic must be checked against synthetic datasets.
+
+### Method build order (resistivity)
+SP -> VES -> HP -> 2D ERT -> IP -> 3D ERT
+- SP (Self Potential) is first: passive, no current injection, no inversion, no pyGIMLi. It proves the upload -> QC -> visualize -> report pipeline.
+- HP (Horizontal Profiling) is the same as 2D profiling under other terminology: electrodes move along a line at fixed spacing, mapping lateral variation at roughly constant depth.
+
+### Array selection flow
+User picks Method -> Survey Type -> Array:
+- SP: no array
+- VES: Schlumberger, Wenner, Wenner-Schlumberger
+- HP: Wenner, Dipole-Dipole, Schlumberger, Pole-Pole
+- 2D ERT: Wenner, Dipole-Dipole, Schlumberger, Pole-Pole, Pole-Dipole, Gradient
+- IP: same as 2D ERT
+- 3D ERT: all arrays, grid format
+The array choice drives which parser runs, how the geometric factor is computed, which pyGIMLi parameters are set, and which columns the upload screen expects.
+
+### Stage 1 status
+Done: Docker services (PostgreSQL, Redis, SeaweedFS), database schema, C++ backend (Crow) with CMake preset, Python inversion service (FastAPI + pyGIMLi), C++ -> Python bridge (/api/bridge/health, /api/bridge/echo, 502 when Python is down), React shell with live backend status light.
+Not started: authentication (login route is a placeholder), file upload (route is a placeholder).
+
+### Starting the stack
+    cd infra && docker compose up -d postgres redis seaweedfs inversion-service
+    cd backend && cmake --preset default && cmake --build --preset default && ./build/backend
+    cd frontend && npm run dev     (open forwarded port 5173)
+
+### Next: Stage 2 (SP first)
+Define the common data format (JSON) that parsers produce and the Python service and frontend consume, starting with SP, before writing any parser.
