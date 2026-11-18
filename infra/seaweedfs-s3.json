@@ -1,0 +1,11 @@
+{
+  "identities": [
+    {
+      "name": "geocalc",
+      "credentials": [
+        { "accessKey": "geocalc", "secretKey": "geocalc_pass" }
+      ],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    }
+  ]
+}

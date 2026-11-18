@@ -1,0 +1,45 @@
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: geocalc
+      POSTGRES_PASSWORD: geocalc_pass
+      POSTGRES_DB: geocalc
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  seaweedfs:
+    image: chrislusf/seaweedfs
+    restart: unless-stopped
+    command: server -dir=/data -s3 -s3.port=9000 -s3.config=/etc/seaweedfs/s3.json
+    ports:
+      - "9000:9000"
+    volumes:
+      - seaweed_data:/data
+      - ./seaweedfs-s3.json:/etc/seaweedfs/s3.json:ro
+  inversion-service:
+    build: ../inversion-service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/health').read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  postgres_data:
+  seaweed_data:
