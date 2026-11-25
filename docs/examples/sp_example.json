@@ -1,0 +1,199 @@
+{
+  "format_version": "0.1",
+  "method": "sp",
+  "survey": {
+    "title": "SP profile L1 - synthetic example for data-format review",
+    "date": "2026-11-05",
+    "operator": "field team A",
+    "site": "Test site 1 (synthetic)",
+    "crs": "EPSG:32632",
+    "units": { "length": "m", "potential": "mV" },
+    "notes": "Synthetic example created for the format review; not real field data. 20 stations at 10 m spacing; negative anomaly centred near x=100 m, positive anomaly near x=180 m."
+  },
+  "instrument": {
+    "name": "Generic field SP receiver (example)",
+    "electrode_type": "non-polarising porous pot (Cu/CuSO4)",
+    "notes": "Example instrument description; a real parser would copy this from the field file."
+  },
+  "provenance": {
+    "source_file": "sp_profile_L1_2026-11-05.csv",
+    "parser_name": "sp-csv-parser",
+    "parser_version": "0.1.0",
+    "source_sha256": "7314719c2d9af4b38a611c93bfbe8c09b604f0ce211dd3811bbcc1fb8df88b45",
+    "parsed_at": "2026-11-05T18:00:00Z"
+  },
+  "data": {
+    "base_station": { "id": "B01", "x": 0.0, "y": 0.0, "z": 101.5 },
+    "polarity_convention": "EXAMPLE ONLY, NOT CONFIRMED: positive mV means the roving electrode potential is higher than the base electrode potential, as displayed by the instrument.",
+    "stations": [
+      {
+        "id": "SP-01", "x": 10.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 1.2, "corrected": 1.22,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-02", "x": 20.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 0.8, "corrected": 0.84,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-03", "x": 30.0, "y": 0.0, "z": 102.4, "line_id": "L1",
+        "potential_mv": {
+          "raw": 2.1, "corrected": 2.16,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-04", "x": 40.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 3.5, "corrected": 3.58,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-05", "x": 50.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 2.9, "corrected": 3.0,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-06", "x": 60.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 1.1, "corrected": 1.22,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-07", "x": 70.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -2.4, "corrected": -2.26,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok",
+        "note": "near drainage ditch"
+      },
+      {
+        "id": "SP-08", "x": 80.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -12.7, "corrected": -12.54,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-09", "x": 90.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -28.1, "corrected": -28.12,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "suspect",
+        "note": "rain shower during readings",
+        "repeat_readings": [
+          { "raw": -28.3, "time": "2026-11-05T09:12:00Z", "note": "repeat 1" },
+          { "raw": -27.9, "time": "2026-11-05T09:20:00Z", "note": "repeat 2" }
+        ]
+      },
+      {
+        "id": "SP-10", "x": 100.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -41.6, "corrected": -41.4,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok",
+        "note": "negative anomaly centre"
+      },
+      {
+        "id": "SP-11", "x": 110.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -36.2, "corrected": -35.98,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-12", "x": 120.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -22.9, "corrected": -22.66,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-13", "x": 130.0, "y": 0.0, "z": 103.1, "line_id": "L1",
+        "potential_mv": {
+          "raw": -9.4, "corrected": -9.14,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-14", "x": 140.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": -1.8, "corrected": -1.52,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-15", "x": 150.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 3.7, "corrected": 4.0,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-16", "x": 160.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 6.1
+        },
+        "quality": "rejected",
+        "note": "roving electrode unplugged mid-reading; raw value kept, value not used"
+      },
+      {
+        "id": "SP-17", "x": 170.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 9.8, "corrected": 10.14,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-18", "x": 180.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 14.5, "corrected": 14.86,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok",
+        "note": "positive anomaly centre"
+      },
+      {
+        "id": "SP-19", "x": 190.0, "y": 0.0, "z": 101.8, "line_id": "L1",
+        "potential_mv": {
+          "raw": 11.2, "corrected": 11.58,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      },
+      {
+        "id": "SP-20", "x": 200.0, "y": 0.0, "line_id": "L1",
+        "potential_mv": {
+          "raw": 7.9, "corrected": 8.3,
+          "correction": { "type": "loop_closure", "description": "linear drift correction from loop closure at base station B01 (total drift -0.4 mV over the line, distributed linearly by station index)" }
+        },
+        "quality": "ok"
+      }
+    ]
+  }
+}

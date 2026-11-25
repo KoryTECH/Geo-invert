@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Geo-Invert survey data",
+  "description": "Common parsed-data format for Geo-Invert surveys, version 0.1. SP profiles are fully specified; ves, hp, ert2d, ip and ert3d are reserved (see docs/data-format.md, extension plan).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format_version", "method", "survey", "instrument", "provenance", "data"],
+  "properties": {
+    "format_version": {
+      "const": "0.1"
+    },
+    "method": {
+      "enum": ["sp", "ves", "hp", "ert2d", "ip", "ert3d"],
+      "description": "Survey method. Only \"sp\" has a specified data layout in v0.1."
+    },
+    "survey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "date", "operator", "site", "crs", "units"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "date": { "type": "string", "format": "date" },
+        "operator": { "type": "string", "minLength": 1 },
+        "site": { "type": "string", "minLength": 1 },
+        "crs": {
+          "type": "string",
+          "minLength": 1,
+          "description": "CRS identifier string, e.g. \"EPSG:32632\". Coordinate order/meaning is an open question."
+        },
+        "units": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["length", "potential"],
+          "properties": {
+            "length": { "const": "m" },
+            "potential": { "const": "mV" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "electrode_type"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "electrode_type": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_file", "parser_name", "parser_version", "source_sha256"],
+      "properties": {
+        "source_file": { "type": "string", "minLength": 1 },
+        "parser_name": { "type": "string", "minLength": 1 },
+        "parser_version": { "type": "string", "minLength": 1 },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the source file."
+        },
+        "parsed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "data": {
+      "type": "object",
+      "description": "Method-specific data block; refined below depending on \"method\"."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "method": { "const": "sp" } }, "required": ["method"] },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/$defs/spData" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "method": { "enum": ["ves", "hp", "ert2d", "ip", "ert3d"] } },
+        "required": ["method"]
+      },
+      "then": {
+        "properties": {
+          "data": {
+            "type": "object",
+            "$comment": "Reserved method: data layout not specified yet, see the extension plan in docs/data-format.md."
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      }
+    },
+    "spData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_station", "polarity_convention", "stations"],
+      "properties": {
+        "base_station": { "$ref": "#/$defs/point" },
+        "polarity_convention": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Explicit sign convention for the measured values; never defaulted."
+        },
+        "stations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/spStation" }
+        }
+      }
+    },
+    "spStation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y", "line_id", "potential_mv", "quality"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" },
+        "line_id": { "type": "string", "minLength": 1 },
+        "potential_mv": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["raw"],
+          "properties": {
+            "raw": {
+              "type": "number",
+              "description": "Original measured value in mV; never overwritten."
+            },
+            "corrected": {
+              "type": "number",
+              "description": "Value after an explicitly described correction; stored next to raw, never replacing it."
+            },
+            "correction": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "description"],
+              "properties": {
+                "type": { "enum": ["drift", "loop_closure"] },
+                "description": { "type": "string", "minLength": 1 },
+                "applied_at": { "type": "string", "format": "date-time" }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": { "required": ["correction"] },
+              "then": { "required": ["corrected"] }
+            },
+            {
+              "if": { "required": ["corrected"] },
+              "then": { "required": ["correction"] }
+            }
+          ]
+        },
+        "quality": {
+          "enum": ["ok", "suspect", "rejected"]
+        },
+        "note": { "type": "string" },
+        "repeat_readings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["raw"],
+            "properties": {
+              "raw": { "type": "number" },
+              "time": { "type": "string", "format": "date-time" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
